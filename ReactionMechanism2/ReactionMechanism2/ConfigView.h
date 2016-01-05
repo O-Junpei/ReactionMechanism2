@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ConfigView.h
 //  ReactionMechanism2
 //
 //  Created by onojunpei on 2016/01/05.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface ConfigView : UIViewController
 
 @end
-
