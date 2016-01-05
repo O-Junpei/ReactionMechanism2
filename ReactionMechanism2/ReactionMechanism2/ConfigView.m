@@ -19,6 +19,48 @@
     
     self.view.backgroundColor = [UIColor redColor];
     
+    
+    self.view.backgroundColor = [UIColor colorWithRed:0.478 green:0.6902 blue:0.1647 alpha:1.0];
+    
+    
+    //view上部のナビゲーションバーの設定
+    self.configViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
+    self.configViewNav.barTintColor = [UIColor colorWithRed:0.478 green:0.6902 blue:0.1647 alpha:1.0];
+    self.configViewNav.translucent = NO ;
+    
+    //ナビゲーションコントローラーによるナビゲーションバーを隠す。
+    [self.view addSubview:self.configViewNav];
+    
+    /*
+     // ナビゲーションアイテムを生成
+     UINavigationItem *navItem = [[UINavigationItem alloc] init];
+     UIBarButtonItem *serchNavBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showSearchBar:)];
+     
+     
+     // ナビゲーションアイテムに戻る、サーチボタンを設置
+     navItem.rightBarButtonItem = serchNavBtn;
+     
+     //虫めがねの色の変更
+     navItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+     
+     // ナビゲーションバーにナビゲーションアイテムを設置
+     [self.tagsViewNav pushNavigationItem:navItem animated:YES];
+     [self.view addSubview:self.tagsViewNav];
+     */
+    
+    //ナビゲーションバーに設置したラベルの設定
+    self.navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
+    self.navLabel.text = @"化学式データベース";
+    self.navLabel.textColor = [UIColor whiteColor];
+    self.navLabel.font = [UIFont fontWithName:@"AxisStd-UltraLight" size:20];
+    
+    //AxisStd-UltraLight
+    self.navLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.navLabel];
+    
+
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,14 +68,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark --StatusBarを白色に
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    //文字を白くする
+    return UIStatusBarStyleLightContent;
 }
-*/
 
 @end

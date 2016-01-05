@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ConfigView : UIViewController
+@interface ConfigView : UIViewController{
+    
+}
+
+@property (strong, nonatomic) UINavigationBar *configViewNav;
+@property (strong, nonatomic) UILabel *navLabel;
 
 @end

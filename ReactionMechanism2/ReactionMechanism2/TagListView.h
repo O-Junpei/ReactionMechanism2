@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TagListView : UIViewController
+@interface TagListView : UIViewController{
+    
+}
+
+@property (strong, nonatomic) UINavigationBar *tagsViewNav;
+@property (strong, nonatomic) UILabel *navLabel;
 
 @end
