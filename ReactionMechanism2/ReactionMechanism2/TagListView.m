@@ -48,7 +48,7 @@
     
     //ナビゲーションバーに設置したラベルの設定
     self.navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
-    self.navLabel.text = @"化学式データベース";
+    self.navLabel.text = @"Tag List";
     self.navLabel.textColor = [UIColor whiteColor];
     self.navLabel.font = [UIFont fontWithName:@"AxisStd-UltraLight" size:20];
     

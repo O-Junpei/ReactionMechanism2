@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ConfigView : UIViewController{
+@interface ConfigView : UIViewController<UITableViewDelegate,UITableViewDataSource>{
     
 }
 
