@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ConfigView : UIViewController<UITableViewDelegate,UITableViewDataSource>{
+#import "SCLAlertView.h"
+@interface ConfigView : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>{
     
 }
 

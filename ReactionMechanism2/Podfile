@@ -3,3 +3,4 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, "7.1"
 
 pod 'AAShareBubbles','~> 1.1'
+pod 'SCLAlertView-Objective-C', '~> 0.7.9'

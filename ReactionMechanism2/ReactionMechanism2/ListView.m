@@ -14,12 +14,24 @@
 
 @implementation ListView{
     UITableView *listTableView;
+    NSUserDefaults *myDefaults;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     
+    
+    //UserDefaultsの初期設定
+    myDefaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+    [defaults setObject:@"english" forKey:@"KEY_Language"];  // をKEY_Iというキーの初期値は99
+    [myDefaults registerDefaults:defaults];
+    
+    
+    
+    
+    //背景色の設定
     self.view.backgroundColor = [UIColor colorWithRed:0.478 green:0.6902 blue:0.1647 alpha:1.0];
     
     
@@ -79,6 +91,19 @@
     
     self.searchController.searchBar.placeholder= @"検索ワードを入力してください";
     
+    
+    
+    //プロジェクト内のファイルにアクセスできるオブジェクトを宣言
+    //読み込むプロパティリストのファイルパスを指定
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *path = [bundle pathForResource:@"sciecePlist" ofType:@"plist"];
+    //プロパティリストの中身データを取得
+    _sciencePlist = [NSArray arrayWithContentsOfFile:path];
+    
+    
+    //NSLog(@"%@ry",_sciencePlist);
+
+    
 }
 
 
@@ -99,8 +124,7 @@
         return [self.searchResults count];
     }
 */
-    return 14;
-    
+    return [_sciencePlist count];
 }
 
 
@@ -131,7 +155,17 @@
         
     }
     */
-    cell.textLabel.text = @"aa";
+    
+    
+    
+    
+    if ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"]) {
+        cell.textLabel.text = [[_sciencePlist objectAtIndex:indexPath.row] valueForKey:@"jname"];
+    }else{
+        
+        cell.textLabel.text = [[_sciencePlist objectAtIndex:indexPath.row] valueForKey:@"ename"];
+    }
+    
     
     //セル内の文字の色の設定
     cell.textLabel.textColor = [UIColor grayColor];
@@ -174,11 +208,13 @@
 }
 
 
-#pragma mark --画面描画前にテーブルビューを下げる
-
+#pragma mark --画面描画前に呼ばれる。
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    //table更新
+    [listTableView reloadData];
+    //テーブルビューを下げる
     listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top+(self.searchController.searchBar.frame.size.height));
 }
 
@@ -199,5 +235,8 @@
     //文字を白くする
     return UIStatusBarStyleLightContent;
 }
+
+#pragma mark --画面再読み込み時に呼ばれる
+
 
 @end

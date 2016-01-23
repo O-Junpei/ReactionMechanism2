@@ -17,6 +17,7 @@
 @property (strong, nonatomic) UINavigationBar *listViewNav;
 @property (strong, nonatomic) UILabel *navLabel;
 @property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) NSArray *sciencePlist;
 
 
 @end

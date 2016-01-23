@@ -8,7 +8,6 @@
         <!--Config-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="ConfigView" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
@@ -21,8 +20,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Config" id="9RW-pK-aAW"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1253" y="1220"/>
+            <point key="canvasLocation" x="-2181" y="1368"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Aoc-9m-Utc">
@@ -60,7 +60,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T7p-ce-cr3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1358" y="-239"/>
+            <point key="canvasLocation" x="-1314" y="-575"/>
         </scene>
         <!--TagList-->
         <scene sceneID="JD6-xY-ZYw">
@@ -79,7 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Txo-ZH-WIE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1160" y="475"/>
+            <point key="canvasLocation" x="-1264" y="899"/>
         </scene>
     </scenes>
 </document>

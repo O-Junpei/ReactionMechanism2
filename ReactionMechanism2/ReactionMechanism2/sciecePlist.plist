@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>id</key>
+		<string>r0001</string>
+		<key>ename</key>
+		<string>Reaction of 1,3-dithiane</string>
+		<key>jname</key>
+		<string>1,3-ジチアンの反応</string>
+		<key>functionalAry</key>
+		<array>
+			<string>func003</string>
+			<string>func015</string>
+			<string>func021</string>
+			<string>func025</string>
+		</array>
+		<key>tagAry</key>
+		<array>
+			<string>tag006</string>
+		</array>
+	</dict>
+	<dict>
+		<key>id</key>
+		<string>r0002</string>
+		<key>ename</key>
+		<string>Dehydrochloration of Chlorocyclohexane</string>
+		<key>jname</key>
+		<string>Chlorocyclohexaneの脱HCl</string>
+		<key>functionalAry</key>
+		<array>
+			<string>func012</string>
+		</array>
+		<key>tagAry</key>
+		<array>
+			<string>tag005</string>
+		</array>
+	</dict>
+	<dict>
+		<key>id</key>
+		<string>r0003</string>
+		<key>ename</key>
+		<string>Anti-1,2-dihydroxylation of cis-alkene</string>
+		<key>jname</key>
+		<string>cisアルケンのアンチ1，2ジヒドロキシル化</string>
+		<key>functionalAry</key>
+		<array>
+			<string>func001</string>
+			<string>func017</string>
+		</array>
+		<key>tagAry</key>
+		<array>
+			<string>tag003</string>
+			<string>tag019</string>
+		</array>
+	</dict>
+	<dict>
+		<key>id</key>
+		<string>r0004</string>
+		<key>ename</key>
+		<string>Synthesis of cis-alkene</string>
+		<key>jname</key>
+		<string>cis-アルケンの合成</string>
+		<key>functionalAry</key>
+		<array>
+			<string>func022</string>
+			<string>func023</string>
+		</array>
+		<key>tagAry</key>
+		<array/>
+	</dict>
+	<dict>
+		<key>id</key>
+		<string>r0005</string>
+		<key>ename</key>
+		<string>Claisen-Schmidt reaction</string>
+		<key>jname</key>
+		<string>Claisen-Schmidt反応</string>
+		<key>functionalAry</key>
+		<array>
+			<string>func003</string>
+			<string>func024</string>
+		</array>
+		<key>tagAry</key>
+		<array>
+			<string>tag006</string>
+		</array>
+	</dict>
+</array>
+</plist>

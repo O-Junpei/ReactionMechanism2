@@ -15,12 +15,16 @@
 @implementation ConfigView{
     
     UITableView *configTableView;
+    NSUserDefaults *myDefaults;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor colorWithRed:0.478 green:0.6902 blue:0.1647 alpha:1.0];
+    
+    //UserDefaultの読み込み
+    myDefaults = [NSUserDefaults standardUserDefaults];
     
     
     //view上部のナビゲーションバーの設定
@@ -84,7 +88,7 @@
 #pragma mark --TableViewのSection数を設定する。
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 #pragma mark --TableViewのSection数を設定する。
@@ -100,14 +104,14 @@
         case 1:
             //使い方
             //・使い方
-            return 3;
+            return 2;
             break;
             
         case 2:
             //サウンド
             //・効果音
             //・バイブ設定
-            return 4;
+            return 1;
             break;
             
         default:
@@ -126,13 +130,16 @@
     switch (section) {
     
         case 0:
-            //ゲーム設定
             return @"Langage";
             break;
             
         case 1:
-            //
             return @"Others";
+            break;
+            
+        case 2:
+            
+            return @"Reset";
             break;
             
         default:
@@ -161,10 +168,35 @@
     cell.textLabel.numberOfLines = 3;
     
     //セルの選択時の色を変えない
-    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-
-    cell.textLabel.text = @"aa";
+    
+    
+    //表示文字の切り分け
+    switch (indexPath.section) {
+        case 0:
+            if ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"]) {
+                cell.textLabel.text = @"Japanise";
+            }else{
+                cell.textLabel.text = @"English";
+            }
+            break;
+        case 1:
+            switch (indexPath.row) {
+                case 0:
+                    cell.textLabel.text = @"WriteLeviews";
+                    break;
+                    
+                default:
+                    cell.textLabel.text = @"Share";
+                    break;
+            }
+            break;
+        default:
+                    cell.textLabel.text = @"Reset";
+            break;
+    }
+    
     
     //セル内の文字の色の設定
     cell.textLabel.textColor = [UIColor grayColor];
@@ -183,6 +215,30 @@
 #pragma mark --セル選択時に動くメソッド
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
+    //表示文字の切り分け
+    switch (indexPath.section) {
+        case 0:
+            NSLog(@"言語選択画面が押された");
+            [self showResetAlert];
+            
+            break;
+        case 1:
+            switch (indexPath.row) {
+                case 0:
+                    NSLog(@"レビューを書くが押された");
+                    break;
+                    
+                default:
+                    NSLog(@"拡散が押された");
+                    break;
+            }
+            break;
+        default:
+            NSLog(@"リセットが押された");
+            break;
+    }
     
     /*
      //検索状態が続いていたら検索を終了させる
@@ -206,11 +262,33 @@
     
 }
 
-- (NSInteger)numberOfSections {
-    return 2; // セクションは2個とします
+#pragma mark --設定リセットの際に呼ばれる。
+-(void)showResetAlert{
+    
+    // Get started
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    [alert addButton:@"English" target:self selector:@selector(englishChosed)];
+    [alert addButton:@"Japanise" target:self selector:@selector(japaniseChosed)];
+    [alert showSuccess:self title:@"Langage" subTitle:@"Please Chose Language" closeButtonTitle:@"Close" duration:0.0f];
+    
 }
 
 
+
+-(void)englishChosed{
+    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:@"english" forKey:@"KEY_Language"];
+    [ud synchronize];
+    [configTableView reloadData];
+}
+
+-(void)japaniseChosed{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:@"japanise" forKey:@"KEY_Language"];
+    [ud synchronize];
+    [configTableView reloadData];
+}
 
 
 
