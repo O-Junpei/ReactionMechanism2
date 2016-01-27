@@ -32,12 +32,12 @@
     
     
     //背景色の設定
-    self.view.backgroundColor = [UIColor colorWithRed:0.478 green:0.6902 blue:0.1647 alpha:1.0];
+    self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
     
     
     //view上部のナビゲーションバーの設定
     self.listViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
-    self.listViewNav.barTintColor = [UIColor colorWithRed:0.478 green:0.6902 blue:0.1647 alpha:1.0];
+    self.listViewNav.barTintColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
     self.listViewNav.translucent = NO ;
     
     //ナビゲーションコントローラーによるナビゲーションバーを隠す。

@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:0.478 green:0.6902 blue:0.1647 alpha:1.0];
+    self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
     
     //UserDefaultの読み込み
     myDefaults = [NSUserDefaults standardUserDefaults];
@@ -29,7 +29,7 @@
     
     //view上部のナビゲーションバーの設定
     self.configViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
-    self.configViewNav.barTintColor = [UIColor colorWithRed:0.478 green:0.6902 blue:0.1647 alpha:1.0];
+    self.configViewNav.barTintColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
     self.configViewNav.translucent = NO ;
     
     //ナビゲーションコントローラーによるナビゲーションバーを隠す。
@@ -64,7 +64,7 @@
     
 
     // テーブルビュー例文
-    configTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-70) style:UITableViewStyleGrouped];
+    configTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-49) style:UITableViewStyleGrouped];
     configTableView.delegate = self;
     configTableView.dataSource = self;
     [self.view addSubview:configTableView];
