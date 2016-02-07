@@ -15,4 +15,8 @@
 @property (strong, nonatomic) UINavigationBar *tagsViewNav;
 @property (strong, nonatomic) UILabel *navLabel;
 
+
+//ナビゲーション下部に付いているセグメントバー,selectedSegmentIndexが0は化学式,selectedSegmentIndexが1は化合物
+@property (strong, nonatomic) UISegmentedControl *tableSegment;
+
 @end

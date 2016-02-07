@@ -22,7 +22,7 @@
     
     
     //view上部のナビゲーションバーの設定
-    self.tagsViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
+    self.tagsViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 88)];
     self.tagsViewNav.barTintColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
     self.tagsViewNav.translucent = NO ;
     
@@ -58,8 +58,21 @@
     
     
     
+#pragma mark --「化学式」と「化合物」のセグメント
+    
+    NSArray *segmentAry = [NSArray arrayWithObjects:@"化学式", @"化合物", nil];
+    self.tableSegment = [[UISegmentedControl alloc] initWithItems:segmentAry];
+    self.tableSegment.frame = CGRectMake(40, 66, self.view.frame.size.width-80, 24);
+    self.tableSegment.selectedSegmentIndex = 0; //化学式を選択
+    
+    //値が変更された時にsegmentChangedメソッドを呼び出す
+    [self.tableSegment addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:self.tableSegment];
+    
+    
+    
     // スクロールビュー例文
-    UIScrollView *sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 66, self.view.frame.size.width, self.view.frame.size.height-50)];
+    UIScrollView *sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 108, self.view.frame.size.width, self.view.frame.size.height-49-44)];
     sv.backgroundColor = [UIColor whiteColor];
     
     
@@ -92,5 +105,13 @@
     //文字を白くする
     return UIStatusBarStyleLightContent;
 }
+
+
+#pragma mark --セグメントが変更された時に呼ばれる
+-(void)segmentChanged:(UISegmentedControl*)seg{
+    
+
+}
+
 
 @end

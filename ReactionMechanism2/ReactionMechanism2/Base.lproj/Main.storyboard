@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="5wY-7o-hAr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="5wY-7o-hAr">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
         <!--Config-->
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Config" id="9RW-pK-aAW"/>
+                    <tabBarItem key="tabBarItem" title="Config" image="config" id="9RW-pK-aAW"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -56,7 +56,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="List" id="KhE-GH-iTh"/>
+                    <tabBarItem key="tabBarItem" title="List" image="reactionList" id="KhE-GH-iTh"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T7p-ce-cr3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -75,11 +75,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="TagList" id="keb-fu-cXg"/>
+                    <tabBarItem key="tabBarItem" title="TagList" image="tagList" id="keb-fu-cXg"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Txo-ZH-WIE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1264" y="899"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="config" width="40" height="40"/>
+        <image name="reactionList" width="40" height="40"/>
+        <image name="tagList" width="40" height="40"/>
+    </resources>
 </document>
