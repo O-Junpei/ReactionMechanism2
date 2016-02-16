@@ -18,33 +18,36 @@
     [super viewDidLoad];
     
     
+    
+    
+    //背景色の設定
     self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
     
     
     //view上部のナビゲーションバーの設定
-    self.tagsViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 88)];
+    self.tagsViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
     self.tagsViewNav.barTintColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
     self.tagsViewNav.translucent = NO ;
     
     //ナビゲーションコントローラーによるナビゲーションバーを隠す。
     [self.view addSubview:self.tagsViewNav];
     
-    /*
+    
     // ナビゲーションアイテムを生成
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
-    UIBarButtonItem *serchNavBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showSearchBar:)];
+    UIBarButtonItem *changeTagBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(changeTag:)];
     
     
-    // ナビゲーションアイテムに戻る、サーチボタンを設置
-    navItem.rightBarButtonItem = serchNavBtn;
+    // ナビゲーションアイテムにタグの切り替えボタンの変更
+    navItem.rightBarButtonItem = changeTagBtn;
     
-    //虫めがねの色の変更
+    //タグ切り替えボタンの色の変更
     navItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     
     // ナビゲーションバーにナビゲーションアイテムを設置
     [self.tagsViewNav pushNavigationItem:navItem animated:YES];
     [self.view addSubview:self.tagsViewNav];
-    */
+    
     
     //ナビゲーションバーに設置したラベルの設定
     self.navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
@@ -58,8 +61,8 @@
     
     
     
-#pragma mark --「化学式」と「化合物」のセグメント
     
+    /*
     NSArray *segmentAry = [NSArray arrayWithObjects:@"化学式", @"化合物", nil];
     self.tableSegment = [[UISegmentedControl alloc] initWithItems:segmentAry];
     self.tableSegment.frame = CGRectMake(40, 66, self.view.frame.size.width-80, 24);
@@ -67,22 +70,73 @@
     
     //値が変更された時にsegmentChangedメソッドを呼び出す
     [self.tableSegment addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:self.tableSegment];
+    [self.view addSubview:self.tableSegment];*/
     
     
-    
+#pragma mark --スクロールビュー
     // スクロールビュー例文
-    UIScrollView *sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 108, self.view.frame.size.width, self.view.frame.size.height-49-44)];
+    UIScrollView *sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
     sv.backgroundColor = [UIColor whiteColor];
     
     
-    UIView *uv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1000)];
+    
+    
+    //一つのViewの大きさ
+    float listViewWidth = self.view.frame.size.width * 0.28;
+    
+    //スペーサーの大きさ
+    float spaceWidth = self.view.frame.size.width * 0.04;
+    
+    //表示個数
+    int Viewkazu = 15;
+    
+    float uvHeight = spaceWidth + (spaceWidth + listViewWidth*1.5)*(Viewkazu/3) + 50;
+    
+    
+    UIView *uv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, uvHeight)];
     uv.backgroundColor = [UIColor whiteColor];
     
+
     
-    //
-    UIView *test1 = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/12, self.view.frame.size.width/12, self.view.frame.size.width/3, 250)];
-    test1.backgroundColor = [UIColor greenColor];
+    
+    for (int i=0; i < Viewkazu; i++) {
+        
+        UIView *listViews;
+        float viewHeight = spaceWidth + (spaceWidth + listViewWidth*1.5)*(i/3);
+        
+        switch (i%3) {
+            case 0:
+                //
+                listViews = [[UIView alloc] initWithFrame:CGRectMake(spaceWidth, viewHeight, listViewWidth, listViewWidth*1.5)];
+                [uv addSubview:listViews];
+                break;
+            case 1:
+                
+                listViews = [[UIView alloc] initWithFrame:CGRectMake(spaceWidth*2+listViewWidth, viewHeight, listViewWidth, listViewWidth*1.5)];
+                [uv addSubview:listViews];
+                break;
+                
+            case 2:
+                listViews = [[UIView alloc] initWithFrame:CGRectMake(spaceWidth*3+listViewWidth*2, viewHeight, listViewWidth, listViewWidth*1.5)];
+                [uv addSubview:listViews];
+                
+                break;
+                
+                
+            default:
+                break;
+        }
+        listViews.backgroundColor = [UIColor greenColor];
+
+    }
+    
+    
+    
+    
+    /*
+    
+    
+    
     
     UIView *test2 = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width/12)*(7/12), self.view.frame.size.width/12, self.view.frame.size.width/3, 250)];
     test2.backgroundColor = [UIColor yellowColor];
@@ -91,11 +145,17 @@
     [uv addSubview:test2];
     [uv addSubview:test1];
     
-    
+    */
 
     [sv addSubview:uv];
     sv.contentSize = uv.bounds.size;
     [self.view addSubview:sv];
+    
+}
+
+
+#pragma mark --ナビゲーションボタン右上の虫眼鏡が押されたら動く
+- (void)changeTag:(UIButton *)btn {
     
 }
 

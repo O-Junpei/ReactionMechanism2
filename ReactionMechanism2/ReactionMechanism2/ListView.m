@@ -30,6 +30,7 @@
     
     
     
+#pragma mark --ナビゲーションバーの設定
     
     //背景色の設定
     self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
@@ -71,7 +72,7 @@
     
     
     // テーブルビュー例文
-    listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-49)];
+    listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
     listTableView.delegate = self;
     listTableView.dataSource = self;
     [self.view addSubview:listTableView];
