@@ -101,23 +101,23 @@
     
     for (int i=0; i < Viewkazu; i++) {
         
-        UIView *listViews;
+        TagView *listViews;
         float viewHeight = spaceWidth + (spaceWidth + listViewWidth*1.5)*(i/3);
         
         switch (i%3) {
             case 0:
                 //
-                listViews = [[UIView alloc] initWithFrame:CGRectMake(spaceWidth, viewHeight, listViewWidth, listViewWidth*1.5)];
+                listViews = [[TagView alloc] initWithFrame:CGRectMake(spaceWidth, viewHeight, listViewWidth, listViewWidth*1.5)];
                 [uv addSubview:listViews];
                 break;
             case 1:
                 
-                listViews = [[UIView alloc] initWithFrame:CGRectMake(spaceWidth*2+listViewWidth, viewHeight, listViewWidth, listViewWidth*1.5)];
+                listViews = [[TagView alloc] initWithFrame:CGRectMake(spaceWidth*2+listViewWidth, viewHeight, listViewWidth, listViewWidth*1.5)];
                 [uv addSubview:listViews];
                 break;
                 
             case 2:
-                listViews = [[UIView alloc] initWithFrame:CGRectMake(spaceWidth*3+listViewWidth*2, viewHeight, listViewWidth, listViewWidth*1.5)];
+                listViews = [[TagView alloc] initWithFrame:CGRectMake(spaceWidth*3+listViewWidth*2, viewHeight, listViewWidth, listViewWidth*1.5)];
                 [uv addSubview:listViews];
                 
                 break;
@@ -126,8 +126,9 @@
             default:
                 break;
         }
-        listViews.backgroundColor = [UIColor greenColor];
-
+        
+        listViews.TagImage.image = [UIImage imageNamed:@"r0001_ename.png"];
+        
     }
     
     

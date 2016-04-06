@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TagView.h"
 
 @interface TagListView : UIViewController{
     

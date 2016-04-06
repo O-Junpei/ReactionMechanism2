@@ -29,7 +29,6 @@
     [myDefaults registerDefaults:defaults];
     
     
-    
 #pragma mark --ナビゲーションバーの設定
     
     //背景色の設定
