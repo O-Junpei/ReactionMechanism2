@@ -145,7 +145,7 @@
     cell.textLabel.numberOfLines = 3;
     
     //セルの選択時の色を変えない
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     //通常モードかserchモードかでtableに表示する配列の設定
     /*if (self.tableSegment.selectedSegmentIndex == 1) {
@@ -185,6 +185,13 @@
 #pragma mark --セル選択時に動くメソッド
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //選択セルのidを取得
+    NSString *selectedID = [[_sciencePlist objectAtIndex:indexPath.row] valueForKey:@"id"];
+    
+    //詳細表示画面にidを送る
+    DetailView *secondVC = [[DetailView alloc] init];
+    secondVC.selectedID = selectedID;
+    [self presentViewController: secondVC animated:YES completion: nil];
     
     /*
     //検索状態が続いていたら検索を終了させる
