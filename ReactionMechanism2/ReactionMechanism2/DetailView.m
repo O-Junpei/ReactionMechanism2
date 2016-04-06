@@ -10,6 +10,7 @@
 
 @interface DetailView (){
     NSUserDefaults *myDefaults;
+    NSDictionary *resultDic;
 }
 
 @end
@@ -37,14 +38,29 @@
     //読み込むプロパティリストのファイルパスを指定
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *path = [bundle pathForResource:@"sciecePlist" ofType:@"plist"];
+    
     //プロパティリストの中身データを取得
     _sciencePlist = [NSArray arrayWithContentsOfFile:path];
     
-    
+    //欲しい配列を取得する
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"id", self.selectedID];
-    NSDictionary *resultDic = [[_sciencePlist filteredArrayUsingPredicate:predicate] firstObject];
+    resultDic = [[_sciencePlist filteredArrayUsingPredicate:predicate] firstObject];
     NSLog(@"results:%@", resultDic);
     
+
+    //ナビゲーションバーのセット
+    [self setNavBar];
+    
+    [self setScrView];
+    
+}
+
+
+
+#pragma mark --ナビゲーションバーをセットする
+- (void)setNavBar{
+    
+    //ナビゲーションバーの設定
     
     NSString *labelText;
     
@@ -54,9 +70,6 @@
         labelText = [resultDic valueForKey:@"ename"];
     }
     
-    
-    
-#pragma mark --ナビゲーションバーの設定
     
     //背景色の設定
     self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
@@ -95,7 +108,45 @@
     //AxisStd-UltraLight
     self.navLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.navLabel];
+
+    
 }
+
+
+
+
+#pragma mark --スクリールビューのセット
+- (void)setScrView{
+    //スクリールビュ
+    UIScrollView *sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+    sv.backgroundColor = [UIColor blackColor];
+    sv.maximumZoomScale = 2.5;
+    sv.minimumZoomScale = 1.0;
+    sv.delegate = self;
+    
+    iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-64)];
+    
+    //日本語か英語かで表示画像を切り替える
+    NSString *fileName;
+    if ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"]) {
+        fileName = [self.selectedID stringByAppendingString:@"_jname.png"];
+    }else{
+        fileName = [self.selectedID stringByAppendingString:@"_ename.png"];
+    }
+    
+    UIImage *img = [UIImage imageNamed:fileName];
+    iv.image = img;
+    [sv addSubview:iv];
+
+    [self.view addSubview:sv];
+}
+
+
+#pragma mark --ScrillViewのデリゲートメソッド
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return iv;
+}
+
 
 
 #pragma mark --前のViewに戻る

@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailView : UIViewController
+@interface DetailView : UIViewController<UIScrollViewDelegate>{
+    UIImageView *iv;
+}
 
 
 @property (strong, nonatomic) UINavigationBar *detailViewNav;
@@ -16,5 +18,8 @@
 
 @property (strong, nonatomic) NSString *selectedID;
 @property (strong, nonatomic) NSArray *sciencePlist;
+@property (weak, nonatomic) UIScrollView *scrollView;
+
+
 
 @end

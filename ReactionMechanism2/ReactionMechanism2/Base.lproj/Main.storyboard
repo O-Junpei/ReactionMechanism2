@@ -65,7 +65,7 @@
         <!--Detai View-->
         <scene sceneID="tDM-l4-Ban">
             <objects>
-                <viewController id="7Ie-5g-FXK" customClass="DetaiView" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetaiView" id="7Ie-5g-FXK" customClass="DetaiView" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HfO-uf-K6u"/>
                         <viewControllerLayoutGuide type="bottom" id="aRr-lQ-Ou4"/>
