@@ -15,11 +15,17 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        
-        _TagImage = [[UIImageView alloc] initWithFrame:CGRectMake(60, 60, 30, 30)];
-        //_TagImage.image = [UIImage imageNamed:@"r0001_ename.png"];
-        
+     
+        //タグのイメージ
+        _TagImage = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.width*0.05, self.frame.size.width*0.9, self.frame.size.width*0.9)];
         [self addSubview:_TagImage];
+        
+        //
+        _TagText = [[UITextView alloc] initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.width, self.frame.size.width*0.9, (self.frame.size.height-self.frame.size.width)*0.9)];
+        //_TagText.textAlignment = NSTextAlignmentCenter;
+        _TagText.font = [UIFont systemFontOfSize:14];
+        _TagText.editable = false;
+        [self addSubview:_TagText];
         
         self.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0];
     }

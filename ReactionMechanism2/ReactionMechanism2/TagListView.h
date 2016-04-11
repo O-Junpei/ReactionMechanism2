@@ -20,4 +20,9 @@
 //ナビゲーション下部に付いているセグメントバー,selectedSegmentIndexが0は化学式,selectedSegmentIndexが1は化合物
 @property (strong, nonatomic) UISegmentedControl *tableSegment;
 
+
+//
+@property (strong, nonatomic) NSArray *functionalGroupPlist;
+
+
 @end

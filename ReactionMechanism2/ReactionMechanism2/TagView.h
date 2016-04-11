@@ -11,6 +11,11 @@
 @interface TagView : UIView
 
 
+//タグ画像が載る
 @property (strong, nonatomic) UIImageView *TagImage;
+
+//テキスト画面が載る
+@property (strong, nonatomic) UITextView *TagText;
+
 
 @end

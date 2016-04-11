@@ -8,7 +8,9 @@
 
 #import "TagListView.h"
 
-@interface TagListView ()
+@interface TagListView (){
+    NSUserDefaults *myDefaults;
+}
 
 @end
 
@@ -16,6 +18,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    //UserDefaultsの初期設定
+    myDefaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+    [defaults setObject:@"english" forKey:@"KEY_Language"];  // をKEY_Iというキーの初期値は99
+    [myDefaults registerDefaults:defaults];
     
     
     
@@ -78,17 +87,24 @@
     UIScrollView *sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
     sv.backgroundColor = [UIColor whiteColor];
     
-    
-    
-    
     //一つのViewの大きさ
     float listViewWidth = self.view.frame.size.width * 0.28;
     
     //スペーサーの大きさ
     float spaceWidth = self.view.frame.size.width * 0.04;
     
+    
+    //官能基plistの読み込み
+    //プロジェクト内のファイルにアクセスできるオブジェクトを宣言
+    //読み込むプロパティリストのファイルパスを指定
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *path = [bundle pathForResource:@"functionalGroup" ofType:@"plist"];
+    //プロパティリストの中身データを取得
+    _functionalGroupPlist = [NSArray arrayWithContentsOfFile:path];
+    
+    
     //表示個数
-    int Viewkazu = 15;
+    int Viewkazu = (int)[_functionalGroupPlist count];
     
     float uvHeight = spaceWidth + (spaceWidth + listViewWidth*1.5)*(Viewkazu/3) + 50;
     
@@ -96,15 +112,13 @@
     UIView *uv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, uvHeight)];
     uv.backgroundColor = [UIColor whiteColor];
     
-
-    
-    
     for (int i=0; i < Viewkazu; i++) {
         
         TagView *listViews;
         float viewHeight = spaceWidth + (spaceWidth + listViewWidth*1.5)*(i/3);
         
-        switch (i%3) {
+        switch (i%3)
+        {
             case 0:
                 //
                 listViews = [[TagView alloc] initWithFrame:CGRectMake(spaceWidth, viewHeight, listViewWidth, listViewWidth*1.5)];
@@ -119,16 +133,21 @@
             case 2:
                 listViews = [[TagView alloc] initWithFrame:CGRectMake(spaceWidth*3+listViewWidth*2, viewHeight, listViewWidth, listViewWidth*1.5)];
                 [uv addSubview:listViews];
-                
                 break;
-                
-                
             default:
                 break;
         }
         
-        listViews.TagImage.image = [UIImage imageNamed:@"r0001_ename.png"];
+        NSString *id = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"id"];
+        listViews.TagImage.image = [UIImage imageNamed:id];
         
+        
+        if ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"])
+        {
+            listViews.TagText.text = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"jname"];
+        }else{
+            listViews.TagText.text = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"ename"];
+        }
     }
     
     
