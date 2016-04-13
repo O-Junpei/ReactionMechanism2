@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TagView.h"
+#import "TagResultView.h"
 
 @interface TagListView : UIViewController{
     
@@ -23,6 +24,10 @@
 
 //
 @property (strong, nonatomic) NSArray *functionalGroupPlist;
+
+
+
+@property (strong, nonatomic) TagView *listViews;
 
 
 @end

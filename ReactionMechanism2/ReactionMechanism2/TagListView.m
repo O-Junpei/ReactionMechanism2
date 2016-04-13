@@ -27,10 +27,21 @@
     [myDefaults registerDefaults:defaults];
     
     
+    //官能基plistの読み込み
+    //プロジェクト内のファイルにアクセスできるオブジェクトを宣言
+    //読み込むプロパティリストのファイルパスを指定
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *path = [bundle pathForResource:@"functionalGroup" ofType:@"plist"];
+    //プロパティリストの中身データを取得
+    _functionalGroupPlist = [NSArray arrayWithContentsOfFile:path];
+    
+    
     
     
     //背景色の設定
     self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
+    
+    
     
     
     //view上部のナビゲーションバーの設定
@@ -69,18 +80,14 @@
     [self.view addSubview:self.navLabel];
     
     
-    
-    
-    /*
-    NSArray *segmentAry = [NSArray arrayWithObjects:@"化学式", @"化合物", nil];
-    self.tableSegment = [[UISegmentedControl alloc] initWithItems:segmentAry];
-    self.tableSegment.frame = CGRectMake(40, 66, self.view.frame.size.width-80, 24);
-    self.tableSegment.selectedSegmentIndex = 0; //化学式を選択
-    
-    //値が変更された時にsegmentChangedメソッドを呼び出す
-    [self.tableSegment addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:self.tableSegment];*/
-    
+    //Viewにセットする
+    [self setScrollAndTagView];
+}
+
+
+
+#pragma mark --UIViewにScrollViewとTagViewを設置
+-(void)setScrollAndTagView{
     
 #pragma mark --スクロールビュー
     // スクロールビュー例文
@@ -94,13 +101,6 @@
     float spaceWidth = self.view.frame.size.width * 0.04;
     
     
-    //官能基plistの読み込み
-    //プロジェクト内のファイルにアクセスできるオブジェクトを宣言
-    //読み込むプロパティリストのファイルパスを指定
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSString *path = [bundle pathForResource:@"functionalGroup" ofType:@"plist"];
-    //プロパティリストの中身データを取得
-    _functionalGroupPlist = [NSArray arrayWithContentsOfFile:path];
     
     
     //表示個数
@@ -112,65 +112,79 @@
     UIView *uv = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, uvHeight)];
     uv.backgroundColor = [UIColor whiteColor];
     
+    
+    //タッチイベントの有効化
+    
+    _listViews.userInteractionEnabled = true;
+    
     for (int i=0; i < Viewkazu; i++) {
         
-        TagView *listViews;
         float viewHeight = spaceWidth + (spaceWidth + listViewWidth*1.5)*(i/3);
         
         switch (i%3)
         {
             case 0:
                 //
-                listViews = [[TagView alloc] initWithFrame:CGRectMake(spaceWidth, viewHeight, listViewWidth, listViewWidth*1.5)];
-                [uv addSubview:listViews];
+                _listViews = [[TagView alloc] initWithFrame:CGRectMake(spaceWidth, viewHeight, listViewWidth, listViewWidth*1.5)];
                 break;
             case 1:
                 
-                listViews = [[TagView alloc] initWithFrame:CGRectMake(spaceWidth*2+listViewWidth, viewHeight, listViewWidth, listViewWidth*1.5)];
-                [uv addSubview:listViews];
+                _listViews = [[TagView alloc] initWithFrame:CGRectMake(spaceWidth*2+listViewWidth, viewHeight, listViewWidth, listViewWidth*1.5)];
                 break;
                 
             case 2:
-                listViews = [[TagView alloc] initWithFrame:CGRectMake(spaceWidth*3+listViewWidth*2, viewHeight, listViewWidth, listViewWidth*1.5)];
-                [uv addSubview:listViews];
+                _listViews = [[TagView alloc] initWithFrame:CGRectMake(spaceWidth*3+listViewWidth*2, viewHeight, listViewWidth, listViewWidth*1.5)];
                 break;
             default:
+                NSLog(@"Error");
                 break;
         }
         
+        _listViews.userInteractionEnabled = true;
+        
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hoge:)];
+        [_listViews addGestureRecognizer:tapGesture];
+        
+        
+        _listViews.tag = i;
+        [uv addSubview:_listViews];
+        
         NSString *id = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"id"];
-        listViews.TagImage.image = [UIImage imageNamed:id];
+        _listViews.TagImage.image = [UIImage imageNamed:id];
         
         
         if ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"])
         {
-            listViews.TagText.text = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"jname"];
+            _listViews.TagText.text = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"jname"];
         }else{
-            listViews.TagText.text = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"ename"];
+            _listViews.TagText.text = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"ename"];
         }
     }
     
     
-    
-    
-    /*
-    
-    
-    
-    
-    UIView *test2 = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width/12)*(7/12), self.view.frame.size.width/12, self.view.frame.size.width/3, 250)];
-    test2.backgroundColor = [UIColor yellowColor];
-    
-    
-    [uv addSubview:test2];
-    [uv addSubview:test1];
-    
-    */
-
     [sv addSubview:uv];
-    sv.contentSize = uv.bounds.size;
-    [self.view addSubview:sv];
     
+    CGSize sz = CGSizeMake(uv.bounds.size.width, uv.bounds.size.height+_listViews.frame.size.height*1.1);
+    
+    sv.contentSize = sz;
+    
+    [self.view addSubview:sv];
+}
+
+
+
+
+
+-(void)hoge:(id)sender{
+    int selectedViewTag = (int)[(UIGestureRecognizer *)sender view].tag;
+    
+    //詳細表示画面にidを送る
+    TagResultView *secondVC = [[TagResultView alloc] init];
+    
+    NSDictionary *dic = [_functionalGroupPlist objectAtIndex:selectedViewTag];
+    secondVC.tagID = [dic objectForKey:@"id"];
+    //secondVC.selectedID = selectedID;
+    [self presentViewController: secondVC animated:YES completion: nil];
 }
 
 

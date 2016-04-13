@@ -108,8 +108,6 @@
     //AxisStd-UltraLight
     self.navLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.navLabel];
-
-    
 }
 
 
