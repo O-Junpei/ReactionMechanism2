@@ -8,7 +8,9 @@
 
 #import "TagResultView.h"
 
-@interface TagResultView ()
+@interface TagResultView (){
+    
+}
 
 @end
 
@@ -20,6 +22,31 @@
     [super viewDidLoad];
     
     NSLog(@"SelectedID=%@",_tagID);
+    
+    
+    
+    //プロジェクト内のファイルにアクセスできるオブジェクトを宣言
+    //読み込むプロパティリストのファイルパスを指定
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *path = [bundle pathForResource:@"sciecePlist" ofType:@"plist"];
+    //プロパティリストの中身データを取得
+    _sciencePlist = [NSArray arrayWithContentsOfFile:path];
+    
+   _tableViewAry = [NSMutableArray array];
+
+    
+    for(NSDictionary *dic in _sciencePlist){
+        
+        NSArray *ary = [dic objectForKey:@"functionalAry"];
+        if ([ary containsObject:_tagID]) {
+            [_tableViewAry addObject:dic];
+        }
+    }
+    
+    
+    
+    
+    
     
     
 #pragma mark --ナビゲーションバーの設定
@@ -100,7 +127,7 @@
      return [self.searchResults count];
      }
      */
-    return 10;
+    return [_tableViewAry count];
 }
 
 
@@ -143,7 +170,7 @@
     }
     */
     
-    cell.textLabel.text = @"あーあーあーあー";
+    cell.textLabel.text = [[_tableViewAry objectAtIndex:indexPath.row] valueForKey:@"jname"];
     
     //セル内の文字の色の設定
     cell.textLabel.textColor = [UIColor grayColor];
@@ -164,6 +191,21 @@
 {
     
     NSLog(@"セルが押されたよ");
+    
+    [[_tableViewAry objectAtIndex:indexPath.row] valueForKey:@"id"];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    //選択セルのidを取得
+    NSString *selectedID = [[_sciencePlist objectAtIndex:indexPath.row] valueForKey:@"id"];
+    
+    //詳細表示画面にidを送る
+    DetailView *secondVC = [[DetailView alloc] init];
+    secondVC.selectedID = selectedID;
+    [self presentViewController: secondVC animated:YES completion: nil];
+    
+    
     /*
     //選択セルのidを取得
     NSString *selectedID = [[_sciencePlist objectAtIndex:indexPath.row] valueForKey:@"id"];

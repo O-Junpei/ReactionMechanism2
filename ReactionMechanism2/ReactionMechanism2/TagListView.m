@@ -81,9 +81,15 @@
     
     
     //Viewにセットする
-    [self setScrollAndTagView];
+    //[self setScrollAndTagView];
 }
 
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    //Viewにセットする
+    [self setScrollAndTagView];
+}
 
 
 #pragma mark --UIViewにScrollViewとTagViewを設置

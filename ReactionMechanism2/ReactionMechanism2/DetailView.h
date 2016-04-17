@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AAShareBubbles.h"
+#import <Social/Social.h>
+#import <MessageUI/MessageUI.h>
 
-@interface DetailView : UIViewController<UIScrollViewDelegate>{
+@interface DetailView : UIViewController<UIScrollViewDelegate,MFMailComposeViewControllerDelegate,AAShareBubblesDelegate>{
     UIImageView *iv;
 }
 
