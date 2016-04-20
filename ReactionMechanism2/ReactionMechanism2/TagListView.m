@@ -42,8 +42,6 @@
     self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
     
     
-    
-    
     //view上部のナビゲーションバーの設定
     self.tagsViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
     self.tagsViewNav.barTintColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
@@ -55,11 +53,12 @@
     
     // ナビゲーションアイテムを生成
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
-    UIBarButtonItem *changeTagBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(changeTag:)];
+    UIBarButtonItem *changeTagBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"changeIcon_40.png"] style:UIBarButtonItemStylePlain target:self action:@selector(changeTag:)];
     
     
     // ナビゲーションアイテムにタグの切り替えボタンの変更
     navItem.rightBarButtonItem = changeTagBtn;
+    
     
     //タグ切り替えボタンの色の変更
     navItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
