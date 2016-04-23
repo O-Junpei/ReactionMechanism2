@@ -21,11 +21,10 @@
     [super viewDidLoad];
     
     
-    
     //UserDefaultsの初期設定
     myDefaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-    [defaults setObject:@"english" forKey:@"KEY_Language"];  // をKEY_Iというキーの初期値は99
+    [defaults setObject:@"english" forKey:@"KEY_Language"];
     [myDefaults registerDefaults:defaults];
     
     
@@ -102,8 +101,7 @@
     
     
     //NSLog(@"%@ry",_sciencePlist);
-
-    
+    _searchedResult = [_sciencePlist mutableCopy];
 }
 
 
@@ -117,14 +115,8 @@
 #pragma mark --TableViewの行数設定
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
- /*
-    if (self.tableSegment.selectedSegmentIndex == 1) {
-        return [compountAry count];
-    }else{
-        return [self.searchResults count];
-    }
-*/
-    return [_sciencePlist count];
+    
+    return [_searchedResult count];
 }
 
 
@@ -146,24 +138,15 @@
     //セルの選択時の色を変えない
     //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    //通常モードかserchモードかでtableに表示する配列の設定
-    /*if (self.tableSegment.selectedSegmentIndex == 1) {
-        cell.textLabel.text = [compountAry objectAtIndex:indexPath.row];
-    }
-    else{
-        cell.textLabel.text = [self.searchResults objectAtIndex:indexPath.row];
-        
-    }
-    */
-    
+
     
     
     
     if ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"]) {
-        cell.textLabel.text = [[_sciencePlist objectAtIndex:indexPath.row] valueForKey:@"jname"];
+        cell.textLabel.text = [[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"jname"];
     }else{
         
-        cell.textLabel.text = [[_sciencePlist objectAtIndex:indexPath.row] valueForKey:@"ename"];
+        cell.textLabel.text = [[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"ename"];
     }
     
     
@@ -185,7 +168,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //選択セルのidを取得
-    NSString *selectedID = [[_sciencePlist objectAtIndex:indexPath.row] valueForKey:@"id"];
+    NSString *selectedID = [[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"id"];
     
     //詳細表示画面にidを送る
     DetailView *secondVC = [[DetailView alloc] init];
@@ -213,6 +196,69 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];*/
     
 }
+
+
+
+#pragma mark -
+#pragma mark [SearchBar関連]
+
+
+#pragma mark --サーチバーの文字列が編集されたら呼ばれる。
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    
+    //searchTextを大文字に変換
+    NSString *upperSearchString = [searchText uppercaseString];
+    
+    
+    //検索結果の取得
+    _searchedResult = [self conjectureSerarch:upperSearchString];
+    
+    /*
+    //searchTextを保持する
+    searchBarStrings = [NSMutableString stringWithString:searchText];
+    
+    
+    //searchBar中に文字が入っていない時は検索結果に一覧を入れておく。
+    if ([searchText isEqualToString:[NSString stringWithFormat:@""]])
+    {
+        
+        ([self isCompountSegment]) ? (resultsOfCompount = compountListAry) : (resultsOfChemiFormula = chemiFormulaAray);
+    }*/
+    
+    //tableViewのリロード。検索結果を反映させる。
+    [listTableView reloadData];
+     
+     
+}
+     
+
+
+#pragma mark --化合物用の検索メソッド、検索した語がename,jnameに無いか検索する
+- (NSMutableArray *)conjectureSerarch:(NSString *)searchText
+{
+    
+    //検索文字列が空の場合は検索結果を返す。
+    if (searchText.length == 0) {
+        return [_sciencePlist mutableCopy];
+    }
+    
+    
+    NSMutableArray *reactionNames = [NSMutableArray array];
+    
+    //名前に含まれているか検索する
+    for (int i=0; i<[_sciencePlist count]; i++) {
+        NSString *ename = [[_sciencePlist objectAtIndex:i] valueForKey:@"ename"];
+        NSString *jname = [[_sciencePlist objectAtIndex:i] valueForKey:@"jname"];
+        NSRange enameSearchResult = [ename rangeOfString:searchText options:NSCaseInsensitiveSearch];
+        NSRange jnameSearchResult = [jname rangeOfString:searchText options:NSCaseInsensitiveSearch];
+        (enameSearchResult.location != NSNotFound && jnameSearchResult.location != NSNotFound)?([reactionNames addObject:[_sciencePlist objectAtIndex:i]]):(nil);
+    }
+    
+    return reactionNames;
+}
+
+
 
 
 #pragma mark --画面描画前に呼ばれる。
