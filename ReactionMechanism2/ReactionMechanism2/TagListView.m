@@ -10,6 +10,9 @@
 
 @interface TagListView (){
     NSUserDefaults *myDefaults;
+    
+    //「function、「Tag」、どちらを表示しているか判別するためのフラグ
+    NSString *functionTagFlug;
 }
 
 @end
@@ -32,15 +35,21 @@
     //読み込むプロパティリストのファイルパスを指定
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *path = [bundle pathForResource:@"functionalGroup" ofType:@"plist"];
+    
     //プロパティリストの中身データを取得
     _functionalGroupPlist = [NSArray arrayWithContentsOfFile:path];
     
+    path = [bundle pathForResource:@"reactionTag" ofType:@"plist"];
     
+    _reactionTag = [NSArray arrayWithContentsOfFile:path];
+    
+    
+    //初回は「functional」の方を表示する
+    functionTagFlug = @"functionalGroup";
     
     
     //背景色の設定
     self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
-    
     
     //view上部のナビゲーションバーの設定
     self.tagsViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
@@ -78,9 +87,6 @@
     self.navLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.navLabel];
     
-    
-    //Viewにセットする
-    //[self setScrollAndTagView];
 }
 
 
@@ -96,8 +102,8 @@
     
 #pragma mark --スクロールビュー
     // スクロールビュー例文
-    UIScrollView *sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
-    sv.backgroundColor = [UIColor whiteColor];
+    _sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+    _sv.backgroundColor = [UIColor whiteColor];
     
     //一つのViewの大きさ
     float listViewWidth = self.view.frame.size.width * 0.28;
@@ -105,9 +111,7 @@
     //スペーサーの大きさ
     float spaceWidth = self.view.frame.size.width * 0.04;
     
-    
-    
-    
+
     //表示個数
     int Viewkazu = (int)[_functionalGroupPlist count];
     
@@ -154,7 +158,17 @@
         _listViews.tag = i;
         [uv addSubview:_listViews];
         
-        NSString *id = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"id"];
+        
+        NSString *id;
+        
+        if ([functionTagFlug isEqualToString:@"functionalGroup"]) {
+        
+            id = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"id"];
+        
+         }else{
+             id = [[_reactionTag objectAtIndex:i] valueForKey:@"id"];
+         }
+        
         _listViews.TagImage.image = [UIImage imageNamed:id];
         
         
@@ -167,13 +181,13 @@
     }
     
     
-    [sv addSubview:uv];
+    [_sv addSubview:uv];
     
     CGSize sz = CGSizeMake(uv.bounds.size.width, uv.bounds.size.height+_listViews.frame.size.height*1.1);
     
-    sv.contentSize = sz;
+    _sv.contentSize = sz;
     
-    [self.view addSubview:sv];
+    [self.view addSubview:_sv];
 }
 
 
@@ -196,6 +210,13 @@
 #pragma mark --ナビゲーションボタン右上の虫眼鏡が押されたら動く
 - (void)changeTag:(UIButton *)btn {
     
+    if ([functionTagFlug isEqualToString:@"functionalGroup"]) {
+        functionTagFlug = @"reactionTag";
+    }else{
+        functionTagFlug = @"functionalGroup";
+    }
+    
+    [self setScrollAndTagView];
 }
 
 

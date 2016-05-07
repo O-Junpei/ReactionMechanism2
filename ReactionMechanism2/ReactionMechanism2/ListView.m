@@ -33,7 +33,6 @@
     //背景色の設定
     self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
     
-    
     //view上部のナビゲーションバーの設定
     self.listViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
     self.listViewNav.barTintColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
@@ -46,7 +45,6 @@
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
     UIBarButtonItem *serchNavBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showSearchBar:)];
 
-    
     // ナビゲーションアイテムに戻る、サーチボタンを設置
     navItem.rightBarButtonItem = serchNavBtn;
     
@@ -69,12 +67,19 @@
     [self.view addSubview:self.navLabel];
     
     
+    //UITableViewの下のアレを消す
+    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 750)];
+    whiteView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:whiteView];
+    
     // テーブルビュー例文
-    listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+    listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64-50)];
     listTableView.delegate = self;
     listTableView.dataSource = self;
     [self.view addSubview:listTableView];
     
+    
+
     
 #pragma mark --SearchControllerの初期設定
     
@@ -88,7 +93,8 @@
     self.definesPresentationContext = YES;
     self.searchController.dimsBackgroundDuringPresentation = NO;
     
-    self.searchController.searchBar.placeholder= @"検索ワードを入力してください";
+    NSString *plateHolderStr = ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"])?( @"検索ワードを入力してください"):(@"ケンサクワードプリーズ(英語で)");
+    self.searchController.searchBar.placeholder = plateHolderStr;
     
     
     
@@ -138,9 +144,6 @@
     //セルの選択時の色を変えない
     //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-
-    
-    
     
     if ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"]) {
         cell.textLabel.text = [[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"jname"];
@@ -162,6 +165,7 @@
     
     return cell;
 }
+
 
 
 #pragma mark --セル選択時に動くメソッド
@@ -231,7 +235,16 @@
      
      
 }
-     
+
+
+#pragma mark --serchBarの編集終了後に動く。(キャンセルボタンが押されたら動く)
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    
+    //検索用TextFieldへ入力した文字の保持
+    self.searchController.searchBar.text =@"aaaaaa";
+    
+}
+
 
 
 #pragma mark --化合物用の検索メソッド、検索した語がename,jnameに無いか検索する
@@ -243,18 +256,17 @@
         return [_sciencePlist mutableCopy];
     }
     
-    
     NSMutableArray *reactionNames = [NSMutableArray array];
+    
+    NSString *langKey;
+    ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"])?(langKey = @"jname"):(langKey = @"ename");
     
     //名前に含まれているか検索する
     for (int i=0; i<[_sciencePlist count]; i++) {
-        NSString *ename = [[_sciencePlist objectAtIndex:i] valueForKey:@"ename"];
-        NSString *jname = [[_sciencePlist objectAtIndex:i] valueForKey:@"jname"];
-        NSRange enameSearchResult = [ename rangeOfString:searchText options:NSCaseInsensitiveSearch];
-        NSRange jnameSearchResult = [jname rangeOfString:searchText options:NSCaseInsensitiveSearch];
-        (enameSearchResult.location != NSNotFound && jnameSearchResult.location != NSNotFound)?([reactionNames addObject:[_sciencePlist objectAtIndex:i]]):(nil);
+        NSString *serchText = [[_sciencePlist objectAtIndex:i] valueForKey:langKey];
+        NSRange searchResult = [serchText rangeOfString:searchText options:NSCaseInsensitiveSearch];
+        (searchResult.location != NSNotFound)?([reactionNames addObject:[_sciencePlist objectAtIndex:i]]):(nil);
     }
-    
     return reactionNames;
 }
 

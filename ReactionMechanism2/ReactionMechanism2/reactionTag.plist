@@ -28,14 +28,6 @@
 	</dict>
 	<dict>
 		<key>id</key>
-		<string>tag004</string>
-		<key>ename</key>
-		<string>Electrophilic substitution</string>
-		<key>jname</key>
-		<string>求電子置換反応</string>
-	</dict>
-	<dict>
-		<key>id</key>
 		<string>tag005</string>
 		<key>ename</key>
 		<string>Elimination</string>
