@@ -160,24 +160,18 @@
         
         
         NSString *id;
-        
-        if ([functionTagFlug isEqualToString:@"functionalGroup"]) {
-        
-            id = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"id"];
-        
-         }else{
-             id = [[_reactionTag objectAtIndex:i] valueForKey:@"id"];
-         }
-        
+        id = ([functionTagFlug isEqualToString:@"functionalGroup"])?([[_functionalGroupPlist objectAtIndex:i] valueForKey:@"id"]):([[_reactionTag objectAtIndex:i] valueForKey:@"id"]);
+
         _listViews.TagImage.image = [UIImage imageNamed:id];
+
+        
+        NSString *lang;
+        lang = ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"])?(@"jname"):(@"ename");
         
         
-        if ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"])
-        {
-            _listViews.TagText.text = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"jname"];
-        }else{
-            _listViews.TagText.text = [[_functionalGroupPlist objectAtIndex:i] valueForKey:@"ename"];
-        }
+        _listViews.TagText.text = ([functionTagFlug isEqualToString:@"functionalGroup"])?([[_functionalGroupPlist objectAtIndex:i] valueForKey:lang]):([[_reactionTag objectAtIndex:i] valueForKey:lang]);
+        
+
     }
     
     
@@ -210,11 +204,7 @@
 #pragma mark --ナビゲーションボタン右上の虫眼鏡が押されたら動く
 - (void)changeTag:(UIButton *)btn {
     
-    if ([functionTagFlug isEqualToString:@"functionalGroup"]) {
-        functionTagFlug = @"reactionTag";
-    }else{
-        functionTagFlug = @"functionalGroup";
-    }
+    ([functionTagFlug isEqualToString:@"functionalGroup"])?(functionTagFlug = @"reactionTag"):(functionTagFlug = @"functionalGroup");
     
     [self setScrollAndTagView];
 }

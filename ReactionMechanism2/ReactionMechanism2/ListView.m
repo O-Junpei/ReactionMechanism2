@@ -145,13 +145,9 @@
     //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     
-    if ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"]) {
-        cell.textLabel.text = [[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"jname"];
-    }else{
-        
-        cell.textLabel.text = [[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"ename"];
-    }
-    
+    //言語の指定
+    cell.textLabel.text = ([ReactionLibrary isEnglish])?([[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"ename"]):([[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"jname"]);
+   
     
     //セル内の文字の色の設定
     cell.textLabel.textColor = [UIColor grayColor];
@@ -171,6 +167,9 @@
 #pragma mark --セル選択時に動くメソッド
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    _serchBarText = _searchController.searchBar.text;
+    
     //選択セルのidを取得
     NSString *selectedID = [[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"id"];
     
@@ -240,9 +239,15 @@
 #pragma mark --serchBarの編集終了後に動く。(キャンセルボタンが押されたら動く)
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     
-    //検索用TextFieldへ入力した文字の保持
-    self.searchController.searchBar.text =@"aaaaaa";
+    _serchBarText = @"";
     
+    //検索用TextFieldへ入力した文字の保持
+    self.searchController.searchBar.text = _serchBarText;
+    
+    _searchedResult = [_sciencePlist mutableCopy];
+    
+    //tableViewのリロード。検索結果を反映させる。
+    [listTableView reloadData];
 }
 
 
@@ -277,10 +282,27 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    _searchController.searchBar.text = _serchBarText;
+    
+    //searchTextを大文字に変換
+    NSString *upperSearchString = [_serchBarText uppercaseString];
+    
+    
+    //検索結果の取得
+    _searchedResult = [self conjectureSerarch:upperSearchString];
+    
+    
     //table更新
     [listTableView reloadData];
+    
     //テーブルビューを下げる
-    listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top+(self.searchController.searchBar.frame.size.height));
+    if (_serchBarText.length == 0) {
+        listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top+(self.searchController.searchBar.frame.size.height));
+    }else{
+        listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top);
+    }
+
 }
 
 

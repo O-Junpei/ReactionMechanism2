@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DetailView.h"
+#import "ReactionLibrary.h"
 
 @interface TagResultView : UIViewController<UITableViewDelegate,UITableViewDataSource>
 

@@ -38,14 +38,20 @@
     for(NSDictionary *dic in _sciencePlist){
         
         NSArray *ary = [dic objectForKey:@"functionalAry"];
+        
+        NSLog(@"ary=%@",ary);
+        
+        
         if ([ary containsObject:_tagID]) {
             [_tableViewAry addObject:dic];
         }
+        //NSLog(@"ID:%@",[dic objectForKey:@"id"]);
+        //NSLog(@"ID:%@",[dic objectForKey:@"jname"]);
     }
     
     
     
-    
+    NSLog(@"tableary=%@",_tableViewAry);
     
     
     
@@ -170,7 +176,12 @@
     }
     */
     
-    cell.textLabel.text = [[_tableViewAry objectAtIndex:indexPath.row] valueForKey:@"jname"];
+    
+    
+    
+    cell.textLabel.text = ([ReactionLibrary isEnglish])?([[_tableViewAry objectAtIndex:indexPath.row] objectForKey:@"ename"]):([[_tableViewAry objectAtIndex:indexPath.row] objectForKey:@"jname"]);
+    
+
     
     //セル内の文字の色の設定
     cell.textLabel.textColor = [UIColor grayColor];
@@ -192,13 +203,17 @@
     
     NSLog(@"セルが押されたよ");
     
-    [[_tableViewAry objectAtIndex:indexPath.row] valueForKey:@"id"];
+    //[[_tableViewAry objectAtIndex:indexPath.row] valueForKey:@"id"];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     
     //選択セルのidを取得
-    NSString *selectedID = [[_sciencePlist objectAtIndex:indexPath.row] valueForKey:@"id"];
+    NSString *selectedID = [[_tableViewAry objectAtIndex:indexPath.row] objectForKey:@"id"];
+    
+    
+    NSLog(@"selectedID=%@",selectedID);
+    
     
     //詳細表示画面にidを送る
     DetailView *secondVC = [[DetailView alloc] init];
