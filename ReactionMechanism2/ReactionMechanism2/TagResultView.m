@@ -126,13 +126,6 @@
 #pragma mark --TableViewの行数設定
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    /*
-     if (self.tableSegment.selectedSegmentIndex == 1) {
-     return [compountAry count];
-     }else{
-     return [self.searchResults count];
-     }
-     */
     return [_tableViewAry count];
 }
 

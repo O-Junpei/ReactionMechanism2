@@ -19,15 +19,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+
     //UserDefaultsの初期設定
     myDefaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
     [defaults setObject:@"english" forKey:@"KEY_Language"];
     [myDefaults registerDefaults:defaults];
     
+    //UITabBar.delegate = self;
     
+    
+    //キーボード非表示の通知の登録
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardOff:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
+    
+    
+    //viewのセット
+    [self setInitialView];
+}
+
+
+//様々な初期設定など
+-(void)setInitialView{
 #pragma mark --ナビゲーションバーの設定
     
     //背景色の設定
@@ -44,7 +59,7 @@
     // ナビゲーションアイテムを生成
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
     UIBarButtonItem *serchNavBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showSearchBar:)];
-
+    
     // ナビゲーションアイテムに戻る、サーチボタンを設置
     navItem.rightBarButtonItem = serchNavBtn;
     
@@ -79,7 +94,7 @@
     [self.view addSubview:listTableView];
     
     
-
+    
     
 #pragma mark --SearchControllerの初期設定
     
@@ -109,8 +124,6 @@
     //NSLog(@"%@ry",_sciencePlist);
     _searchedResult = [_sciencePlist mutableCopy];
 }
-
-
 
 
 
@@ -162,13 +175,31 @@
     return cell;
 }
 
-
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    //検索状態が続いていたら検索を終了させる
+    if([self.searchController isActive]) {
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    
+    
+}
 
 #pragma mark --セル選択時に動くメソッド
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    _serchBarText = _searchController.searchBar.text;
+    //検索状態が続いていたら検索を終了させる
+    if([self.searchController isActive]) {
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    
+    
+    //_serchBarText = _searchController.searchBar.text;
     
     //選択セルのidを取得
     NSString *selectedID = [[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"id"];
@@ -178,25 +209,30 @@
     secondVC.selectedID = selectedID;
     [self presentViewController: secondVC animated:YES completion: nil];
     
-    /*
-    //検索状態が続いていたら検索を終了させる
-    if([self.searchController isActive]) {
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-    
-    NSString *chemicalFormula;
-    
-    chemicalFormula = [self.searchResults objectAtIndex:indexPath.row];
-    
-    //選択された反応名
-    selectedReaction = chemicalFormula;
-    
-    //push
-    [self performSegueWithIdentifier:@"toDetailDictionary" sender:self];
-    
     //セルの選択色の変更
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];*/
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    
+    /*
+     //検索状態が続いていたら検索を終了させる
+     if([self.searchController isActive]) {
+     
+     [self dismissViewControllerAnimated:YES completion:nil];
+     }
+     
+     NSString *chemicalFormula;
+     
+     chemicalFormula = [self.searchResults objectAtIndex:indexPath.row];
+     
+     //選択された反応名
+     selectedReaction = chemicalFormula;
+     
+     //push
+     [self performSegueWithIdentifier:@"toDetailDictionary" sender:self];
+     
+     //セルの選択色の変更
+     [tableView deselectRowAtIndexPath:indexPath animated:YES];*/
     
 }
 
@@ -217,11 +253,11 @@
     //検索結果の取得
     _searchedResult = [self conjectureSerarch:upperSearchString];
     
-    /*
+    
     //searchTextを保持する
-    searchBarStrings = [NSMutableString stringWithString:searchText];
+    _serchBarText = [NSMutableString stringWithString:searchText];
     
-    
+    /*
     //searchBar中に文字が入っていない時は検索結果に一覧を入れておく。
     if ([searchText isEqualToString:[NSString stringWithFormat:@""]])
     {
@@ -239,6 +275,10 @@
 #pragma mark --serchBarの編集終了後に動く。(キャンセルボタンが押されたら動く)
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     
+    //検索用TextFieldへ入力した文字の保持
+    self.searchController.searchBar.text =_serchBarText;
+    
+    /*
     _serchBarText = @"";
     
     //検索用TextFieldへ入力した文字の保持
@@ -247,9 +287,23 @@
     _searchedResult = [_sciencePlist mutableCopy];
     
     //tableViewのリロード。検索結果を反映させる。
-    [listTableView reloadData];
+    [listTableView reloadData];*/
 }
 
+
+
+#pragma mark --Segue で次の Viewに移行する時に選択されたセルのタイトルを渡す。
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    /*
+     // identifier が toViewController であることの確認
+     if ([[segue identifier] isEqualToString:@"toDetailDictionary"]) {
+     DictionaryDetailViewController *vc = (DictionaryDetailViewController*)[segue destinationViewController];
+     // 移行先の ViewController に画像名を渡す
+     vc.recievedReaction = selectedReaction;
+     }
+     
+     */
+}
 
 
 #pragma mark --化合物用の検索メソッド、検索した語がename,jnameに無いか検索する
@@ -276,12 +330,38 @@
 }
 
 
+#pragma mark --KeyBoardを閉じた時に呼ばれる
+-(void)keyboardOff:(NSNotification *)notification
+{
+    //検索用TextFieldへ入力した文字の保持
+    //タイミングによっては「searchBarTextDidEndEditing」が実行された後にTextFieldがクリアされるため、二重で実行している。
+    self.searchController.searchBar.text =_serchBarText;
+    
+    //検索状態が続いていたら検索を終了させる
+    if([self.searchController isActive]) {
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    
+    
+    
+    
+    [self.searchController resignFirstResponder];
+    
+}
+
 
 
 #pragma mark --画面描画前に呼ばれる。
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    
+    
+    /*
+    //viewのセット
+    [self setInitialView];
     
     _searchController.searchBar.text = _serchBarText;
     
@@ -301,11 +381,35 @@
         listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top+(self.searchController.searchBar.frame.size.height));
     }else{
         listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top);
-    }
+    }*/
+    
+    [listTableView reloadData];
+   listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top+(self.searchController.searchBar.frame.size.height));
 
 }
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    
+    self.searchController.searchBar.text = _serchBarText;
+    
+    
+    [self.view endEditing:YES];
+    
+    // UISearchBar からフォーカスを外します。
+    [searchBar resignFirstResponder];
+    
+}
 
+/*
+#pragma mark --serchBarの編集終了後に動く。
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    
+    //検索用TextFieldへ入力した文字の保持
+    self.searchController.searchBar.text =searchBarStrings;
+    
+}
+*/
 
 
 #pragma mark --ナビゲーションボタン右上の虫眼鏡が押されたら動く

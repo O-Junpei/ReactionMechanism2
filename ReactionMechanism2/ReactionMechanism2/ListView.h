@@ -10,9 +10,7 @@
 #import "DetailView.h"
 #import "ReactionLibrary.h"
 
-@interface ListView : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchDisplayDelegate>{
-    
-    
+@interface ListView : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchDisplayDelegate,UITabBarDelegate>{
 }
 
 @property (strong, nonatomic) UINavigationBar *listViewNav;

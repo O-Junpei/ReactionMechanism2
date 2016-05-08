@@ -212,24 +212,6 @@
 	</dict>
 	<dict>
 		<key>id</key>
-		<string>r0013</string>
-		<key>ename</key>
-		<string>Bromination of alcohol with phosphorus tribromide</string>
-		<key>jname</key>
-		<string>三臭化リンによるアルコールの臭素化</string>
-		<key>functionalAry</key>
-		<array>
-			<string>func001</string>
-			<string>func012</string>
-		</array>
-		<key>tagAry</key>
-		<array>
-			<string>tag003</string>
-			<string>tag018</string>
-		</array>
-	</dict>
-	<dict>
-		<key>id</key>
 		<string>r0014</string>
 		<key>ename</key>
 		<string>Dieckmann condensation</string>
@@ -1839,9 +1821,9 @@
 		<key>id</key>
 		<string>r0108</string>
 		<key>ename</key>
-		<string>Synthesis of carboxylic anhydrode</string>
+		<string>Decarboxylation of carboxyl acid</string>
 		<key>jname</key>
-		<string>カルボン酸無水物の合成</string>
+		<string>カルボン酸の脱炭酸</string>
 		<key>functionalAry</key>
 		<array>
 			<string>func004</string>
@@ -3583,7 +3565,7 @@
 		<key>ename</key>
 		<string>Organolithium compound</string>
 		<key>jname</key>
-		<string>有機化合物の略称</string>
+		<string>有機リチウム化合物</string>
 		<key>functionalAry</key>
 		<array/>
 		<key>tagAry</key>
@@ -3842,7 +3824,7 @@
 		<key>id</key>
 		<string>r0229</string>
 		<key>ename</key>
-		<string>Grignard reaction eith Cu+</string>
+		<string>Grignard reaction with Cu+</string>
 		<key>jname</key>
 		<string>銅(Ⅰ)イオンを含むGrignard反応</string>
 		<key>functionalAry</key>
