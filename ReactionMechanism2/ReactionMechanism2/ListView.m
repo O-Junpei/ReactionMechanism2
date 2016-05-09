@@ -371,7 +371,7 @@
     
     //検索結果の取得
     _searchedResult = [self conjectureSerarch:upperSearchString];
-    
+    */
     
     //table更新
     [listTableView reloadData];
@@ -381,11 +381,13 @@
         listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top+(self.searchController.searchBar.frame.size.height));
     }else{
         listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top);
-    }*/
+    }
     
+    
+    /*
     [listTableView reloadData];
    listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top+(self.searchController.searchBar.frame.size.height));
-
+*/
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -401,15 +403,7 @@
     
 }
 
-/*
-#pragma mark --serchBarの編集終了後に動く。
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
-    
-    //検索用TextFieldへ入力した文字の保持
-    self.searchController.searchBar.text =searchBarStrings;
-    
-}
-*/
+
 
 
 #pragma mark --ナビゲーションボタン右上の虫眼鏡が押されたら動く
@@ -421,11 +415,6 @@
     
 }
 
-#pragma mark --StatusBarを白色に
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    //文字を白くする
-    return UIStatusBarStyleLightContent;
-}
 
 #pragma mark --画面再読み込み時に呼ばれる
 

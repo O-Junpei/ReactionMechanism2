@@ -26,7 +26,7 @@
 @property (strong, nonatomic) NSArray *functionalGroupPlist;
 
 //反応に関するタグ
-@property (strong, nonatomic) NSArray *reactionTag;
+@property (strong, nonatomic) NSArray *reactionTagPlist;
 
 @property (strong, nonatomic) TagView *listViews;
 

@@ -41,7 +41,7 @@
     
     path = [bundle pathForResource:@"reactionTag" ofType:@"plist"];
     
-    _reactionTag = [NSArray arrayWithContentsOfFile:path];
+    _reactionTagPlist = [NSArray arrayWithContentsOfFile:path];
     
     
     //初回は「functional」の方を表示する
@@ -111,9 +111,22 @@
     //スペーサーの大きさ
     float spaceWidth = self.view.frame.size.width * 0.04;
     
+    
+    //表示個数
+    int Viewkazu;
+    
+    if ([functionTagFlug isEqualToString:@"functionalGroup"]) {
+        
+        NSLog(@"yes");
+        Viewkazu = (int)[_functionalGroupPlist count];
+    }else{
+        NSLog(@"no");
+        Viewkazu = (int)[_reactionTagPlist count];
+    }
+    
 
     //表示個数
-    int Viewkazu = (int)[_functionalGroupPlist count];
+    //int Viewkazu = (int)[_functionalGroupPlist count];
     
     float uvHeight = spaceWidth + (spaceWidth + listViewWidth*1.5)*(Viewkazu/3) + 50;
     
@@ -160,7 +173,7 @@
         
         
         NSString *id;
-        id = ([functionTagFlug isEqualToString:@"functionalGroup"])?([[_functionalGroupPlist objectAtIndex:i] valueForKey:@"id"]):([[_reactionTag objectAtIndex:i] valueForKey:@"id"]);
+        id = ([functionTagFlug isEqualToString:@"functionalGroup"])?([[_functionalGroupPlist objectAtIndex:i] valueForKey:@"id"]):([[_reactionTagPlist objectAtIndex:i] valueForKey:@"id"]);
 
         _listViews.TagImage.image = [UIImage imageNamed:id];
 
@@ -169,7 +182,7 @@
         lang = ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"])?(@"jname"):(@"ename");
         
         
-        _listViews.TagText.text = ([functionTagFlug isEqualToString:@"functionalGroup"])?([[_functionalGroupPlist objectAtIndex:i] valueForKey:lang]):([[_reactionTag objectAtIndex:i] valueForKey:lang]);
+        _listViews.TagText.text = ([functionTagFlug isEqualToString:@"functionalGroup"])?([[_functionalGroupPlist objectAtIndex:i] valueForKey:lang]):([[_reactionTagPlist objectAtIndex:i] valueForKey:lang]);
         
 
     }
@@ -188,13 +201,28 @@
 
 
 
--(void)hoge:(id)sender{
+-(void)hoge:(id)sender
+{
     int selectedViewTag = (int)[(UIGestureRecognizer *)sender view].tag;
     
     //詳細表示画面にidを送る
     TagResultView *secondVC = [[TagResultView alloc] init];
     
-    NSDictionary *dic = [_functionalGroupPlist objectAtIndex:selectedViewTag];
+    
+    NSDictionary *dic;
+    if ([functionTagFlug isEqualToString:@"functionalGroup"])
+    {
+        dic = [_functionalGroupPlist objectAtIndex:selectedViewTag];
+    }
+    else
+    {
+        dic = [_reactionTagPlist objectAtIndex:selectedViewTag];
+    }
+    
+    
+    
+    
+    
     secondVC.tagID = [dic objectForKey:@"id"];
     //secondVC.selectedID = selectedID;
     [self presentViewController: secondVC animated:YES completion: nil];
@@ -204,7 +232,7 @@
 #pragma mark --ナビゲーションボタン右上の虫眼鏡が押されたら動く
 - (void)changeTag:(UIButton *)btn {
     
-    ([functionTagFlug isEqualToString:@"functionalGroup"])?(functionTagFlug = @"reactionTag"):(functionTagFlug = @"functionalGroup");
+    functionTagFlug = ([functionTagFlug isEqualToString:@"functionalGroup"])?(@"reactionTag"):(@"functionalGroup");
     
     [self setScrollAndTagView];
 }
@@ -217,11 +245,12 @@
 }
 
 
+/*
 #pragma mark --セグメントが変更された時に呼ばれる
 -(void)segmentChanged:(UISegmentedControl*)seg{
     
 
 }
-
+*/
 
 @end

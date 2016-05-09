@@ -168,7 +168,7 @@
     cell.textLabel.numberOfLines = 3;
     
     //セルの選択時の色を変えない
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     
     
@@ -256,9 +256,9 @@
      
      //push
      [self performSegueWithIdentifier:@"toDetailDictionary" sender:self];
-     
+     */
      //セルの選択色の変更
-     [tableView deselectRowAtIndexPath:indexPath animated:YES];*/
+     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 

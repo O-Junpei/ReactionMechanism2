@@ -35,18 +35,19 @@
    _tableViewAry = [NSMutableArray array];
 
     
-    for(NSDictionary *dic in _sciencePlist){
-        
-        NSArray *ary = [dic objectForKey:@"functionalAry"];
-        
-        NSLog(@"ary=%@",ary);
-        
-        
-        if ([ary containsObject:_tagID]) {
+    for(NSDictionary *dic in _sciencePlist)
+    {
+        NSArray *funcAry = [dic objectForKey:@"functionalAry"];
+        if ([funcAry containsObject:_tagID])
+        {
             [_tableViewAry addObject:dic];
         }
-        //NSLog(@"ID:%@",[dic objectForKey:@"id"]);
-        //NSLog(@"ID:%@",[dic objectForKey:@"jname"]);
+        
+        NSArray *reactionAry = [dic objectForKey:@"tagAry"];
+        if ([reactionAry containsObject:_tagID])
+        {
+            [_tableViewAry addObject:dic];
+        }
     }
     
     
