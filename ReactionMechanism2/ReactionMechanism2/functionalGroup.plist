@@ -6,7 +6,7 @@
 		<key>id</key>
 		<string>func001</string>
 		<key>ename</key>
-		<string>Hydroxy_group</string>
+		<string>Hydroxy group</string>
 		<key>jname</key>
 		<string>ヒドロキシ基</string>
 	</dict>
@@ -22,7 +22,7 @@
 		<key>id</key>
 		<string>func003</string>
 		<key>ename</key>
-		<string>Carboxy_group</string>
+		<string>Carboxy group</string>
 		<key>jname</key>
 		<string>カルボキシ基</string>
 	</dict>
@@ -30,7 +30,7 @@
 		<key>id</key>
 		<string>func004</string>
 		<key>ename</key>
-		<string>Carboxylic_acid</string>
+		<string>Carboxylic acid</string>
 		<key>jname</key>
 		<string>カルボン酸</string>
 	</dict>
@@ -78,7 +78,7 @@
 		<key>id</key>
 		<string>func010</string>
 		<key>ename</key>
-		<string>Azide_group</string>
+		<string>Azide group</string>
 		<key>jname</key>
 		<string>アジ化物</string>
 	</dict>
@@ -86,7 +86,7 @@
 		<key>id</key>
 		<string>func011</string>
 		<key>ename</key>
-		<string>Diazo_group</string>
+		<string>Diazo group</string>
 		<key>jname</key>
 		<string>ジアゾ化物</string>
 	</dict>
@@ -102,7 +102,7 @@
 		<key>id</key>
 		<string>func013</string>
 		<key>ename</key>
-		<string>Allyl_group</string>
+		<string>Allyl group</string>
 		<key>jname</key>
 		<string>アリル基</string>
 	</dict>

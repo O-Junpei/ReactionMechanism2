@@ -7,20 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TagView.h"
 #import "TagResultView.h"
+#import "TagView.h"
+#import "ReactionLibrary.h"
 
 @interface TagListView : UIViewController{
     
 }
 
+//view
 @property (strong, nonatomic) UINavigationBar *tagsViewNav;
 @property (strong, nonatomic) UILabel *navLabel;
-
-
-//ナビゲーション下部に付いているセグメントバー,selectedSegmentIndexが0は化学式,selectedSegmentIndexが1は化合物
-@property (strong, nonatomic) UISegmentedControl *tableSegment;
-
+@property (strong, nonatomic) TagView *listViews;
+@property (strong, nonatomic) UIScrollView *sv;
 
 //官能基情報
 @property (strong, nonatomic) NSArray *functionalGroupPlist;
@@ -28,9 +27,7 @@
 //反応に関するタグ
 @property (strong, nonatomic) NSArray *reactionTagPlist;
 
-@property (strong, nonatomic) TagView *listViews;
-
-
-@property (strong, nonatomic) UIScrollView *sv;
+//「function、「Tag」、どちらを表示しているか判別するためのフラグ
+@property (strong, nonatomic) NSString *functionTagFlug;
 
 @end

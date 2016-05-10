@@ -13,7 +13,6 @@
 @end
 
 @implementation ListView{
-    UITableView *listTableView;
     NSUserDefaults *myDefaults;
 }
 
@@ -25,16 +24,12 @@
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
     [defaults setObject:@"english" forKey:@"KEY_Language"];
     [myDefaults registerDefaults:defaults];
-    
-    //UITabBar.delegate = self;
-    
-    
+
     //キーボード非表示の通知の登録
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardOff:)
                                                  name:UIKeyboardDidHideNotification
                                                object:nil];
-    
     
     //viewのセット
     [self setInitialView];
@@ -49,12 +44,12 @@
     self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
     
     //view上部のナビゲーションバーの設定
-    self.listViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
-    self.listViewNav.barTintColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
-    self.listViewNav.translucent = NO ;
+    _listViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
+    _listViewNav.barTintColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
+    _listViewNav.translucent = NO ;
     
     //ナビゲーションコントローラーによるナビゲーションバーを隠す。
-    [self.view addSubview:self.listViewNav];
+    [self.view addSubview:_listViewNav];
     
     // ナビゲーションアイテムを生成
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
@@ -67,20 +62,18 @@
     navItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     
     // ナビゲーションバーにナビゲーションアイテムを設置
-    [self.listViewNav pushNavigationItem:navItem animated:YES];
-    [self.view addSubview:self.listViewNav];
-    
+    [_listViewNav pushNavigationItem:navItem animated:YES];
+    [self.view addSubview:_listViewNav];
     
     //ナビゲーションバーに設置したラベルの設定
-    self.navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
-    self.navLabel.text = @"Reaction List";
-    self.navLabel.textColor = [UIColor whiteColor];
-    self.navLabel.font = [UIFont fontWithName:@"AxisStd-UltraLight" size:20];
+    _navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
+    _navLabel.text = @"Reaction List";
+    _navLabel.textColor = [UIColor whiteColor];
+    _navLabel.font = [UIFont fontWithName:@"AxisStd-UltraLight" size:20];
     
     //AxisStd-UltraLight
-    self.navLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:self.navLabel];
-    
+    _navLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_navLabel];
     
     //UITableViewの下のアレを消す
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 750)];
@@ -88,30 +81,26 @@
     [self.view addSubview:whiteView];
     
     // テーブルビュー例文
-    listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64-50)];
-    listTableView.delegate = self;
-    listTableView.dataSource = self;
-    [self.view addSubview:listTableView];
-    
-    
+    _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64-50)];
+    _listTableView.delegate = self;
+    _listTableView.dataSource = self;
+    [self.view addSubview:_listTableView];
     
     
 #pragma mark --SearchControllerの初期設定
     
     //searchControllerの作成、設置
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchBar.frame = CGRectMake(0, 0, 0, 44.0);
+    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    _searchController.searchBar.frame = CGRectMake(0, 0, 0, 44.0);
     
     //searchControllerの詳細設定
-    self.searchController.searchBar.delegate = self;
-    listTableView.tableHeaderView = self.searchController.searchBar;
+    _searchController.searchBar.delegate = self;
+    _listTableView.tableHeaderView = _searchController.searchBar;
     self.definesPresentationContext = YES;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
+    _searchController.dimsBackgroundDuringPresentation = NO;
     
-    NSString *plateHolderStr = ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"])?( @"検索ワードを入力してください"):(@"ケンサクワードプリーズ(英語で)");
-    self.searchController.searchBar.placeholder = plateHolderStr;
-    
-    
+    NSString *plateHolderStr = @"Search";
+    _searchController.searchBar.placeholder = plateHolderStr;
     
     //プロジェクト内のファイルにアクセスできるオブジェクトを宣言
     //読み込むプロパティリストのファイルパスを指定
@@ -119,7 +108,6 @@
     NSString *path = [bundle pathForResource:@"sciecePlist" ofType:@"plist"];
     //プロパティリストの中身データを取得
     _sciencePlist = [NSArray arrayWithContentsOfFile:path];
-    
     
     //NSLog(@"%@ry",_sciencePlist);
     _searchedResult = [_sciencePlist mutableCopy];
@@ -150,17 +138,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    
     //セルの中のラベルの折り返し設定。とりま3
     cell.textLabel.numberOfLines = 3;
-    
-    //セルの選択時の色を変えない
-    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    
-    //言語の指定
-    cell.textLabel.text = ([ReactionLibrary isEnglish])?([[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"ename"]):([[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"jname"]);
-   
     
     //セル内の文字の色の設定
     cell.textLabel.textColor = [UIColor grayColor];
@@ -172,6 +151,9 @@
     UIImageView *tableAccesory = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableArrow_20.png"]];
     cell.accessoryView = tableAccesory;
     
+    //セルの表示
+    cell.textLabel.text = ([ReactionLibrary isEnglish])?([[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"ename"]):([[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"jname"]);
+    
     return cell;
 }
 
@@ -180,26 +162,14 @@
     [super viewWillDisappear:animated];
     
     //検索状態が続いていたら検索を終了させる
-    if([self.searchController isActive]) {
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-    
-    
+    ([_searchController isActive])?([self dismissViewControllerAnimated:YES completion:nil]):(nil);
 }
 
 #pragma mark --セル選択時に動くメソッド
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     //検索状態が続いていたら検索を終了させる
-    if([self.searchController isActive]) {
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-    
-    
-    //_serchBarText = _searchController.searchBar.text;
+    ([_searchController isActive])?([self dismissViewControllerAnimated:YES completion:nil]):(nil);
     
     //選択セルのidを取得
     NSString *selectedID = [[_searchedResult objectAtIndex:indexPath.row] valueForKey:@"id"];
@@ -211,29 +181,6 @@
     
     //セルの選択色の変更
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    
-    
-    /*
-     //検索状態が続いていたら検索を終了させる
-     if([self.searchController isActive]) {
-     
-     [self dismissViewControllerAnimated:YES completion:nil];
-     }
-     
-     NSString *chemicalFormula;
-     
-     chemicalFormula = [self.searchResults objectAtIndex:indexPath.row];
-     
-     //選択された反応名
-     selectedReaction = chemicalFormula;
-     
-     //push
-     [self performSegueWithIdentifier:@"toDetailDictionary" sender:self];
-     
-     //セルの選択色の変更
-     [tableView deselectRowAtIndexPath:indexPath animated:YES];*/
-    
 }
 
 
@@ -249,61 +196,24 @@
     //searchTextを大文字に変換
     NSString *upperSearchString = [searchText uppercaseString];
     
-    
     //検索結果の取得
     _searchedResult = [self conjectureSerarch:upperSearchString];
     
-    
     //searchTextを保持する
     _serchBarText = [NSMutableString stringWithString:searchText];
-    
-    /*
-    //searchBar中に文字が入っていない時は検索結果に一覧を入れておく。
-    if ([searchText isEqualToString:[NSString stringWithFormat:@""]])
-    {
-        
-        ([self isCompountSegment]) ? (resultsOfCompount = compountListAry) : (resultsOfChemiFormula = chemiFormulaAray);
-    }*/
-    
+
     //tableViewのリロード。検索結果を反映させる。
-    [listTableView reloadData];
-     
-     
+    [_listTableView reloadData];
 }
 
 
 #pragma mark --serchBarの編集終了後に動く。(キャンセルボタンが押されたら動く)
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
-    
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
     //検索用TextFieldへ入力した文字の保持
-    self.searchController.searchBar.text =_serchBarText;
-    
-    /*
-    _serchBarText = @"";
-    
-    //検索用TextFieldへ入力した文字の保持
-    self.searchController.searchBar.text = _serchBarText;
-    
-    _searchedResult = [_sciencePlist mutableCopy];
-    
-    //tableViewのリロード。検索結果を反映させる。
-    [listTableView reloadData];*/
+    _searchController.searchBar.text =_serchBarText;
 }
 
-
-
-#pragma mark --Segue で次の Viewに移行する時に選択されたセルのタイトルを渡す。
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    /*
-     // identifier が toViewController であることの確認
-     if ([[segue identifier] isEqualToString:@"toDetailDictionary"]) {
-     DictionaryDetailViewController *vc = (DictionaryDetailViewController*)[segue destinationViewController];
-     // 移行先の ViewController に画像名を渡す
-     vc.recievedReaction = selectedReaction;
-     }
-     
-     */
-}
 
 
 #pragma mark --化合物用の検索メソッド、検索した語がename,jnameに無いか検索する
@@ -318,7 +228,7 @@
     NSMutableArray *reactionNames = [NSMutableArray array];
     
     NSString *langKey;
-    ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"])?(langKey = @"jname"):(langKey = @"ename");
+    langKey = ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"])?(@"jname"):(@"ename");
     
     //名前に含まれているか検索する
     for (int i=0; i<[_sciencePlist count]; i++) {
@@ -335,19 +245,12 @@
 {
     //検索用TextFieldへ入力した文字の保持
     //タイミングによっては「searchBarTextDidEndEditing」が実行された後にTextFieldがクリアされるため、二重で実行している。
-    self.searchController.searchBar.text =_serchBarText;
+    _searchController.searchBar.text =_serchBarText;
     
     //検索状態が続いていたら検索を終了させる
-    if([self.searchController isActive]) {
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-    
-    
-    
-    
-    [self.searchController resignFirstResponder];
-    
+    ([_searchController isActive])?([self dismissViewControllerAnimated:YES completion:nil]):(nil);
+
+    [_searchController resignFirstResponder];
 }
 
 
@@ -356,67 +259,39 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    
-    
-    /*
-    //viewのセット
-    [self setInitialView];
-    
-    _searchController.searchBar.text = _serchBarText;
-    
-    //searchTextを大文字に変換
-    NSString *upperSearchString = [_serchBarText uppercaseString];
-    
-    
-    //検索結果の取得
-    _searchedResult = [self conjectureSerarch:upperSearchString];
-    */
-    
+
     //table更新
-    [listTableView reloadData];
+    [_listTableView reloadData];
     
     //テーブルビューを下げる
     if (_serchBarText.length == 0) {
-        listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top+(self.searchController.searchBar.frame.size.height));
+        _listTableView.contentOffset = CGPointMake(0, -_listTableView.contentInset.top+(self.searchController.searchBar.frame.size.height));
     }else{
-        listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top);
+        _listTableView.contentOffset = CGPointMake(0, -_listTableView.contentInset.top);
     }
-    
-    
-    /*
-    [listTableView reloadData];
-   listTableView.contentOffset = CGPointMake(0, -listTableView.contentInset.top+(self.searchController.searchBar.frame.size.height));
-*/
 }
 
+
+#pragma mark --キャンセルボタンが押されたら呼ばれる。
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    
-    self.searchController.searchBar.text = _serchBarText;
-    
+    _searchController.searchBar.text = _serchBarText;
     
     [self.view endEditing:YES];
     
     // UISearchBar からフォーカスを外します。
     [searchBar resignFirstResponder];
-    
 }
 
 
 
 
 #pragma mark --ナビゲーションボタン右上の虫眼鏡が押されたら動く
-- (void)showSearchBar:(UIButton *)btn {
-    
+- (void)showSearchBar:(UIButton *)btn
+{
     //テーブルビューを一番上まで引き上げる。
-    [listTableView setContentOffset:CGPointZero animated:YES];
-
-    
+    [_listTableView setContentOffset:CGPointZero animated:YES];
 }
-
-
-#pragma mark --画面再読み込み時に呼ばれる
 
 
 @end

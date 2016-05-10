@@ -9,10 +9,7 @@
 #import "TagListView.h"
 
 @interface TagListView (){
-    NSUserDefaults *myDefaults;
-    
-    //「function、「Tag」、どちらを表示しているか判別するためのフラグ
-    NSString *functionTagFlug;
+
 }
 
 @end
@@ -21,14 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    //UserDefaultsの初期設定
-    myDefaults = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-    [defaults setObject:@"english" forKey:@"KEY_Language"];  // をKEY_Iというキーの初期値は99
-    [myDefaults registerDefaults:defaults];
-    
     
     //官能基plistの読み込み
     //プロジェクト内のファイルにアクセスできるオブジェクトを宣言
@@ -45,16 +34,16 @@
     
     
     //初回は「functional」の方を表示する
-    functionTagFlug = @"functionalGroup";
+    _functionTagFlug = @"functionalGroup";
     
     
     //背景色の設定
     self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
     
     //view上部のナビゲーションバーの設定
-    self.tagsViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
-    self.tagsViewNav.barTintColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
-    self.tagsViewNav.translucent = NO ;
+    _tagsViewNav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
+    _tagsViewNav.barTintColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
+    _tagsViewNav.translucent = NO ;
     
     //ナビゲーションコントローラーによるナビゲーションバーを隠す。
     [self.view addSubview:self.tagsViewNav];
@@ -73,7 +62,7 @@
     navItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     
     // ナビゲーションバーにナビゲーションアイテムを設置
-    [self.tagsViewNav pushNavigationItem:navItem animated:YES];
+    [_tagsViewNav pushNavigationItem:navItem animated:YES];
     [self.view addSubview:self.tagsViewNav];
     
     
@@ -115,7 +104,7 @@
     //表示個数
     int Viewkazu;
     
-    if ([functionTagFlug isEqualToString:@"functionalGroup"]) {
+    if ([_functionTagFlug isEqualToString:@"functionalGroup"]) {
         
         NSLog(@"yes");
         Viewkazu = (int)[_functionalGroupPlist count];
@@ -173,16 +162,16 @@
         
         
         NSString *id;
-        id = ([functionTagFlug isEqualToString:@"functionalGroup"])?([[_functionalGroupPlist objectAtIndex:i] valueForKey:@"id"]):([[_reactionTagPlist objectAtIndex:i] valueForKey:@"id"]);
+        id = ([_functionTagFlug isEqualToString:@"functionalGroup"])?([[_functionalGroupPlist objectAtIndex:i] valueForKey:@"id"]):([[_reactionTagPlist objectAtIndex:i] valueForKey:@"id"]);
 
         _listViews.TagImage.image = [UIImage imageNamed:id];
 
         
         NSString *lang;
-        lang = ([[myDefaults stringForKey:@"KEY_Language"] isEqualToString:@"japanise"])?(@"jname"):(@"ename");
+        lang = ([ReactionLibrary isEnglish])?(@"ename"):(@"jname");
         
         
-        _listViews.TagText.text = ([functionTagFlug isEqualToString:@"functionalGroup"])?([[_functionalGroupPlist objectAtIndex:i] valueForKey:lang]):([[_reactionTagPlist objectAtIndex:i] valueForKey:lang]);
+        _listViews.TagText.text = ([_functionTagFlug isEqualToString:@"functionalGroup"])?([[_functionalGroupPlist objectAtIndex:i] valueForKey:lang]):([[_reactionTagPlist objectAtIndex:i] valueForKey:lang]);
         
 
     }
@@ -210,7 +199,7 @@
     
     
     NSDictionary *dic;
-    if ([functionTagFlug isEqualToString:@"functionalGroup"])
+    if ([_functionTagFlug isEqualToString:@"functionalGroup"])
     {
         dic = [_functionalGroupPlist objectAtIndex:selectedViewTag];
     }
@@ -232,25 +221,9 @@
 #pragma mark --ナビゲーションボタン右上の虫眼鏡が押されたら動く
 - (void)changeTag:(UIButton *)btn {
     
-    functionTagFlug = ([functionTagFlug isEqualToString:@"functionalGroup"])?(@"reactionTag"):(@"functionalGroup");
+    _functionTagFlug = ([_functionTagFlug isEqualToString:@"functionalGroup"])?(@"reactionTag"):(@"functionalGroup");
     
     [self setScrollAndTagView];
 }
-
-
-#pragma mark --StatusBarを白色に
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    //文字を白くする
-    return UIStatusBarStyleLightContent;
-}
-
-
-/*
-#pragma mark --セグメントが変更された時に呼ばれる
--(void)segmentChanged:(UISegmentedControl*)seg{
-    
-
-}
-*/
 
 @end

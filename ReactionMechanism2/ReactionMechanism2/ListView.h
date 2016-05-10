@@ -13,10 +13,16 @@
 @interface ListView : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchDisplayDelegate,UITabBarDelegate>{
 }
 
+//Viewの部品
 @property (strong, nonatomic) UINavigationBar *listViewNav;
+@property (strong, nonatomic) UITableView *listTableView;
 @property (strong, nonatomic) UILabel *navLabel;
 @property (strong, nonatomic) UISearchController *searchController;
+
+//sciencePlistを読み込んだ配列
 @property (strong, nonatomic) NSArray *sciencePlist;
+
+//検索結果が入っている
 @property (strong, nonatomic) NSMutableArray *searchedResult;
 
 //検索文字列を入れる
