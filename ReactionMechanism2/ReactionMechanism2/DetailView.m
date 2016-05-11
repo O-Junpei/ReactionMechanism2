@@ -223,7 +223,6 @@
 }
 
 
-
 #pragma mark --ShareBubleが消えたときに動く
 -(void)aaShareBubblesDidHide:(AAShareBubbles*)bubbles
 {
@@ -241,11 +240,17 @@
         
         // 表示する文字
         NSString *tweetStr;
-        tweetStr = ([ReactionLibrary isEnglish])? (@"When you want to check, When you want to gaze the reaction mechanism #Reactum")
-                    :(@"反応機構を確認したいときに、じっくり眺めたいときに #Reactum #反応機構");
-        
+        tweetStr = ([ReactionLibrary isEnglish])?([_resultDic valueForKey:@"ename"]):([_resultDic valueForKey:@"jname"]);
         [twitterVc setInitialText:tweetStr];
+        
+        //URLを追加する場合
         //[twitterVc addURL:[NSURL URLWithString:@"http://conol.co.jp/apps/chemist/"]];
+        
+        //画像をPOSTする場合
+        NSString *fileName;
+        fileName = ([ReactionLibrary isEnglish])?([_selectedID stringByAppendingString:@"_ename.png"]):([_selectedID stringByAppendingString:@"_jname.png"]);
+        [twitterVc addImage:[UIImage imageNamed:fileName]];
+        
         [self presentViewController:twitterVc animated:YES completion:nil];
     }
     else
@@ -264,12 +269,20 @@
 {
     if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]){
         SLComposeViewController *facebookPostVC = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        NSString *postContent;
-        postContent =([ReactionLibrary isEnglish])? (@"When you want to check, When you want to gaze the reaction mechanism #Reactum")
-        :(@"反応機構を確認したいときに、じっくり眺めたいときに #Reactum #反応機構");
         
+        //POSTするテキスト
+        NSString *postContent;
+        postContent = ([ReactionLibrary isEnglish])?([_resultDic valueForKey:@"ename"]):([_resultDic valueForKey:@"jname"]);
         [facebookPostVC setInitialText:postContent];
+        
+        //POSTするURL
         //[facebookPostVC addURL:[NSURL URLWithString:@"http://sciencetools.biz/"]]; // URL文字列
+        
+        // 画像をPOSTする場合
+        NSString *fileName;
+        fileName = ([ReactionLibrary isEnglish])?([_selectedID stringByAppendingString:@"_ename.png"]):([_selectedID stringByAppendingString:@"_jname.png"]);
+        [facebookPostVC addImage:[UIImage imageNamed:fileName]];
+        
         [self presentViewController:facebookPostVC animated:YES completion:nil];
     }
     else
@@ -287,8 +300,7 @@
 - (void) spreadOnLINE
 {
     NSString *string;
-    string = ([ReactionLibrary isEnglish])? (@"When you want to check, When you want to gaze the reaction mechanism #Reactum")
-    :(@"反応機構を確認したいときに、じっくり眺めたいときに #Reactum #反応機構");
+    string = ([ReactionLibrary isEnglish])?([_resultDic valueForKey:@"ename"]):([_resultDic valueForKey:@"jname"]);
     
     string = [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
     NSString *LINEUrlString = [NSString stringWithFormat:@"line://msg/text/%@", string];
@@ -334,13 +346,13 @@
     {
         //エラーのとき
         alertTitle = ([ReactionLibrary isEnglish])?(@"Failed"):(@"失敗しました");
-        alertMessage = ([ReactionLibrary isEnglish])?(@"Failed"):(@"画像の保存ができませんでした。");
+        alertMessage = ([ReactionLibrary isEnglish])?(@"Unable to save image to Photo Alubum."):(@"画像の保存ができませんでした。");
     }
     else
     {
         //保存できたとき
-        alertTitle = ([ReactionLibrary isEnglish])?(@"できた"):(@"失敗しました");
-        alertMessage = ([ReactionLibrary isEnglish])?(@"できた"):(@"画像の保存ができませんでした。");
+        alertTitle = ([ReactionLibrary isEnglish])?(@"Saved"):(@"保存しました");
+        alertMessage = ([ReactionLibrary isEnglish])?(@"Save the image is complete."):(@"画像を保存しました。");
     }
     [self shareFailAlart:alertTitle message:alertMessage];
 }
@@ -361,24 +373,42 @@
         picker.mailComposeDelegate = self;
         
         // メール件名
-        [picker setSubject:@"四択化学"];
+        NSString *mailSUbject;
+        mailSUbject = ([ReactionLibrary isEnglish])?(@"Reactum"):(@"四択化学");
+        [picker setSubject:mailSUbject];
         
         // メール本文
+        NSString *mailMessage;
+        mailMessage = ([ReactionLibrary isEnglish])?([_resultDic valueForKey:@"ename"]):([_resultDic valueForKey:@"jname"]);
         NSMutableString *bodytxt = [NSMutableString string];
-        [bodytxt appendString:@"クイズで化学が勉強できる〜４択化学〜"];
-        [bodytxt appendString:@"http://sciencetools.biz/"];
+        [bodytxt appendString:mailMessage];
+        
+        //URL
+        //[bodytxt appendString:@"http://sciencetools.biz/"];
+        
+        
+        //POSTする画像
+        NSString *fileName;
+        fileName = ([ReactionLibrary isEnglish])?([_selectedID stringByAppendingString:@"_ename.png"]):([_selectedID stringByAppendingString:@"_jname.png"]);
+        
+        //保存する画像を指定
+        UIImage *image = [UIImage imageNamed:fileName];
+        NSData *imgData = [[NSData alloc] initWithData:UIImagePNGRepresentation(image)];
+        [picker addAttachmentData:imgData mimeType:@"image/png" fileName:fileName];
         
         [picker setMessageBody:bodytxt isHTML:NO];  // HTMLメールの場合は「YES」
         
         // メールビュー表示
         [self presentViewController:picker animated:YES completion:nil];
-        
     }
     else
     {
         // メール設定が行われていない場合
-        [self shareFailAlart:@"投稿失敗しました" message:@"Mail設定を済ませてから拡散機能をお使いください。"];
-        
+        NSString *alertTitle;
+        alertTitle = ([ReactionLibrary isEnglish])?(@"Failed"):(@"投稿失敗しました");
+        NSString *alertMessage;
+        alertMessage = ([ReactionLibrary isEnglish])?(@"Please refer to the setting of the mail."):(@"Mail設定を済ませてから拡散機能をお使いください。");
+        [self shareFailAlart:alertTitle message:alertMessage];
     }
 }
 

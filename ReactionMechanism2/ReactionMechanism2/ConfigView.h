@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Social/Social.h>
+#import <MessageUI/MessageUI.h>
 #import "SCLAlertView.h"
-@interface ConfigView : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>{
+#import "AAShareBubbles.h"
+#import "ReactionLibrary.h"
+@interface ConfigView : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,MFMailComposeViewControllerDelegate,AAShareBubblesDelegate>{
     
 }
 

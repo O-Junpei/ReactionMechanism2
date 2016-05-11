@@ -15,7 +15,6 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        
         self.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0];
         
         //タグのイメージ
