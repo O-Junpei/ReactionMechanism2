@@ -234,7 +234,8 @@
 #pragma mark --Twitterで拡散する
 - (void) spreadOnTwitter
 {
-    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]){
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
         //ツイッター拡散用
         SLComposeViewController *twitterVc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         
@@ -246,8 +247,14 @@
         [twitterVc setInitialText:tweetStr];
         //[twitterVc addURL:[NSURL URLWithString:@"http://conol.co.jp/apps/chemist/"]];
         [self presentViewController:twitterVc animated:YES completion:nil];
-    }else{
-        [self shareFailAlart:@"投稿失敗しました" message:@"Twitterアプリをインストール後に拡散機能をお使いください。"];
+    }
+    else
+    {
+        NSString *alertTitle;
+        alertTitle = ([ReactionLibrary isEnglish])?(@"Failed"):(@"投稿失敗しました");
+        NSString *alertMessage;
+        alertMessage = ([ReactionLibrary isEnglish])?(@"Please install Twitter App."):(@"Twitterアプリをインストール後に拡散機能をお使いください。");
+        [self shareFailAlart:alertTitle message:alertMessage];
     }
 }
 
@@ -264,8 +271,14 @@
         [facebookPostVC setInitialText:postContent];
         //[facebookPostVC addURL:[NSURL URLWithString:@"http://sciencetools.biz/"]]; // URL文字列
         [self presentViewController:facebookPostVC animated:YES completion:nil];
-    }else{
-        [self shareFailAlart:@"投稿失敗しました" message:@"FaceBookアプリをインストール後に拡散機能をお使いください。"];
+    }
+    else
+    {
+        NSString *alertTitle;
+        alertTitle = ([ReactionLibrary isEnglish])?(@"Failed"):(@"投稿失敗しました");
+        NSString *alertMessage;
+        alertMessage = ([ReactionLibrary isEnglish])?(@"Please install FaceBook App."):(@"FaceBookアプリをインストール後に拡散機能をお使いください。");
+        [self shareFailAlart:alertTitle message:alertMessage];
     }
 }
 
@@ -284,8 +297,14 @@
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"line://"]])
     {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:LINEUrlString]];
-    } else {
-        [self shareFailAlart:@"投稿失敗しました" message:@"LINEアプリをインストール後に拡散機能をお使いください。"];
+    }
+    else
+    {
+        NSString *alertTitle;
+        alertTitle = ([ReactionLibrary isEnglish])?(@"Failed"):(@"投稿失敗しました");
+        NSString *alertMessage;
+        alertMessage = ([ReactionLibrary isEnglish])?(@"Please install LINE App."):(@"LINEアプリをインストール後に拡散機能をお使いください。");
+        [self shareFailAlart:alertTitle message:alertMessage];
     }
 }
 
@@ -293,14 +312,9 @@
 #pragma mark --画像データとして保存する
 - (void) savePhoto
 {
-    //
+    //保存する画像名の取得
     NSString *fileName;
-    if ([ReactionLibrary isEnglish]) {
-        fileName = [self.selectedID stringByAppendingString:@"_ename.png"];
-    }else{
-        fileName = [self.selectedID stringByAppendingString:@"_jname.png"];
-    }
-    
+    fileName = ([ReactionLibrary isEnglish])?([_selectedID stringByAppendingString:@"_ename.png"]):([_selectedID stringByAppendingString:@"_jname.png"]);
     
     //保存する画像を指定
     UIImage *image = [UIImage imageNamed:fileName];
@@ -310,14 +324,25 @@
 // 完了を知らせる
 - (void) savingImageIsFinished:(UIImage *)_image didFinishSavingWithError:(NSError *)_error contextInfo:(void *)_contextInfo
 {
-    NSLog(@"ここでインジケータでもだそうか！");
-    if(_error){//エラーのとき
-        
-       [self shareFailAlart:@"エラーのとき" message:@"FaceBookアプリをインストール後に拡散機能をお使いください。"];
-        
-    }else{//保存できたとき
-        [self shareFailAlart:@"保存できたとき" message:@"FaceBookアプリをインストール後に拡散機能をお使いください。"];
+    NSString *alertTitle;
+    NSString *alertMessage;
+    alertMessage = ([ReactionLibrary isEnglish])?(@"Please install LINE App."):(@"LINEアプリをインストール後に拡散機能をお使いください。");
+    
+    
+    //エラーの時のアラート
+    if(_error)
+    {
+        //エラーのとき
+        alertTitle = ([ReactionLibrary isEnglish])?(@"Failed"):(@"失敗しました");
+        alertMessage = ([ReactionLibrary isEnglish])?(@"Failed"):(@"画像の保存ができませんでした。");
     }
+    else
+    {
+        //保存できたとき
+        alertTitle = ([ReactionLibrary isEnglish])?(@"できた"):(@"失敗しました");
+        alertMessage = ([ReactionLibrary isEnglish])?(@"できた"):(@"画像の保存ができませんでした。");
+    }
+    [self shareFailAlart:alertTitle message:alertMessage];
 }
 
 

@@ -12,7 +12,9 @@
     
 }
 
+//view
 @property (strong, nonatomic) UINavigationBar *configViewNav;
 @property (strong, nonatomic) UILabel *navLabel;
+@property (strong, nonatomic) UITableView *configTableView;
 
 @end
