@@ -263,12 +263,13 @@
     //table更新
     [_listTableView reloadData];
     
+    /*
     //テーブルビューを下げる
     if (_serchBarText.length == 0) {
         _listTableView.contentOffset = CGPointMake(0, -_listTableView.contentInset.top+(self.searchController.searchBar.frame.size.height));
     }else{
         _listTableView.contentOffset = CGPointMake(0, -_listTableView.contentInset.top);
-    }
+    }*/
 }
 
 
