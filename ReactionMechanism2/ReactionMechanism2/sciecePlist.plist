@@ -540,9 +540,9 @@
 		<key>id</key>
 		<string>r0034</string>
 		<key>ename</key>
-		<string>Resonance structure of ortho,para orientation 1</string>
+		<string>Resonance structure of ortho, para orientation 1</string>
 		<key>jname</key>
-		<string>o,p配向性の共鳴構造１</string>
+		<string>o, p配向性の共鳴構造１</string>
 		<key>functionalAry</key>
 		<array>
 			<string>func014</string>
@@ -556,9 +556,9 @@
 		<key>id</key>
 		<string>r0035</string>
 		<key>ename</key>
-		<string>Resonance structure of ortho,para orientation 2</string>
+		<string>Resonance structure of ortho, para orientation 2</string>
 		<key>jname</key>
-		<string>o,p配向性の共鳴構造２</string>
+		<string>o, p配向性の共鳴構造２</string>
 		<key>functionalAry</key>
 		<array>
 			<string>func003</string>

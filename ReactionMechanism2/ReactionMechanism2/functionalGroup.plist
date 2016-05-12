@@ -132,14 +132,6 @@
 	</dict>
 	<dict>
 		<key>id</key>
-		<string>func016</string>
-		<key>ename</key>
-		<string>Aromatic</string>
-		<key>jname</key>
-		<string>芳香環</string>
-	</dict>
-	<dict>
-		<key>id</key>
 		<string>func017</string>
 		<key>ename</key>
 		<string>Oxide</string>

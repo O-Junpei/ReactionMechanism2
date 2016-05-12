@@ -54,7 +54,7 @@
 		<key>id</key>
 		<string>tag008</string>
 		<key>ename</key>
-		<string>Rearrangement</string>
+		<string>Rearrangnment</string>
 		<key>jname</key>
 		<string>転位反応</string>
 	</dict>
@@ -169,6 +169,14 @@
 		<string>Alkylation</string>
 		<key>jname</key>
 		<string>アルキル化</string>
+	</dict>
+	<dict>
+		<key>id</key>
+		<string>tag023</string>
+		<key>ename</key>
+		<string>Hydrolysis</string>
+		<key>jname</key>
+		<string>加水分解</string>
 	</dict>
 </array>
 </plist>
