@@ -46,6 +46,9 @@
     //ナビゲーションバーのセット
     [self setNavBar];
     [self setScrView];
+    
+    //広告のセット
+    [self setAdmob];
 }
 
 
@@ -107,7 +110,7 @@
     sv.minimumZoomScale = 1.0;
     sv.delegate = self;
     
-    iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-64)];
+    iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-64-50)];
     
     //日本語か英語かで表示画像を切り替える
     NSString *fileName;
@@ -440,6 +443,30 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+
+#pragma mart - 広告を設定する
+- (void)setAdmob{
+    
+    //広告
+    GADRequest *request = [GADRequest request];
+    request.testDevices = [NSArray arrayWithObjects:@"GAD_SIMULATOR_ID",nil];
+    
+    // 利用可能な広告サイズの定数値は GADAdSize.h で説明されている
+    bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    
+    [bannerView_ setCenter:CGPointMake(kGADAdSizeBanner.size.width/2, self.view.frame.size.height-GAD_SIZE_320x50.height/2)];
+    
+    // 広告ユニット ID を指定する
+    bannerView_.adUnitID = MY_BANNER_UNIT_ID;
+    
+    // ユーザーに広告を表示した場所に後で復元する UIViewController をランタイムに知らせて
+    // ビュー階層に追加する
+    bannerView_.rootViewController = self;
+    [self.view addSubview:bannerView_];
+    
+    // 一般的なリクエストを行って広告を読み込む
+    [bannerView_ loadRequest:[GADRequest request]];
+}
 
 
 @end

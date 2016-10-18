@@ -8,6 +8,8 @@ target 'ReactionMechanism2' do
   # Pods for ReactionMechanism2
   pod 'AAShareBubbles','~> 1.1'
   pod 'SCLAlertView-Objective-C', '~> 0.7.9'
+  pod 'Google-Mobile-Ads-SDK'
+
 
   target 'ReactionMechanism2Tests' do
     inherit! :search_paths

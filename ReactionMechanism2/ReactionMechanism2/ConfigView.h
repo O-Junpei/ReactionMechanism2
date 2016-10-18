@@ -6,14 +6,19 @@
 //  Copyright © 2016年 onojunpei. All rights reserved.
 //
 
+@import GoogleMobileAds;
+
 #import <UIKit/UIKit.h>
 #import <Social/Social.h>
 #import <MessageUI/MessageUI.h>
 #import "SCLAlertView.h"
 #import "AAShareBubbles.h"
+#import "ReactionSettings.h"
 #import "ReactionLibrary.h"
 @interface ConfigView : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,MFMailComposeViewControllerDelegate,AAShareBubblesDelegate>{
     
+    //広告
+    GADBannerView *bannerView_;
 }
 
 //view

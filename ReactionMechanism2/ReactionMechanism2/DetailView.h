@@ -6,14 +6,20 @@
 //
 //
 
+@import GoogleMobileAds;
+
 #import <UIKit/UIKit.h>
 #import <Social/Social.h>
 #import <MessageUI/MessageUI.h>
 #import "AAShareBubbles.h"
+#import "ReactionSettings.h"
 #import "ReactionLibrary.h"
 
 @interface DetailView : UIViewController<UIScrollViewDelegate,MFMailComposeViewControllerDelegate,AAShareBubblesDelegate>{
     UIImageView *iv;
+    
+    //広告
+    GADBannerView *bannerView_;
 }
 
 //View

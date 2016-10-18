@@ -6,11 +6,18 @@
 //
 //
 
+@import GoogleMobileAds;
+
 #import <UIKit/UIKit.h>
+#import "ReactionSettings.h"
 #import "DetailView.h"
 #import "ReactionLibrary.h"
 
+
 @interface ListView : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchDisplayDelegate,UITabBarDelegate>{
+    
+    //広告
+    GADBannerView *bannerView_;
 }
 
 //Viewの部品
@@ -27,5 +34,9 @@
 
 //検索文字列を入れる
 @property (strong, nonatomic) NSString *serchBarText;
+
+//
+
+
 
 @end

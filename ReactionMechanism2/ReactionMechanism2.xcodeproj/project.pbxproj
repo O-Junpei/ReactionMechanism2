@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		76420410F767F274A6A6DEC7 /* libPods-ReactionMechanism2Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B09AFF7398238DD2E0B3F8 /* libPods-ReactionMechanism2Tests.a */; };
 		9791CB7386184E9985CBCFCB /* libPods-ReactionMechanism2UITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C01579EB66BBD455C1D1B868 /* libPods-ReactionMechanism2UITests.a */; };
-		A33242941CB55FF700400305 /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = A33242931CB55FF700400305 /* TagView.m */; };
-		A35775AE1CBE0A5200BD2E5A /* TagResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = A35775AD1CBE0A5200BD2E5A /* TagResultView.m */; };
 		A36473E31CDF037700BA7AD6 /* ReactionLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = A36473E21CDF037700BA7AD6 /* ReactionLibrary.m */; };
 		A383A65E1C3BB1850011563A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A383A65D1C3BB1850011563A /* main.m */; };
 		A383A6611C3BB1850011563A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A383A6601C3BB1850011563A /* AppDelegate.m */; };
@@ -21,7 +19,6 @@
 		A383A6821C3BB1850011563A /* ReactionMechanism2UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A383A6811C3BB1850011563A /* ReactionMechanism2UITests.m */; };
 		A383A6911C3BB7060011563A /* ConfigView.m in Sources */ = {isa = PBXBuildFile; fileRef = A383A6901C3BB7060011563A /* ConfigView.m */; };
 		A383A69A1C3BBE250011563A /* ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = A383A6991C3BBE250011563A /* ListView.m */; };
-		A383A69D1C3BBEC30011563A /* TagListView.m in Sources */ = {isa = PBXBuildFile; fileRef = A383A69C1C3BBEC30011563A /* TagListView.m */; };
 		A3A4B55F1CA67A7A001C0E2C /* DetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = A3A4B55E1CA67A7A001C0E2C /* DetailView.m */; };
 		A3BE861F1CE418BE003C90E9 /* functionalGroup.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3BE861C1CE418BE003C90E9 /* functionalGroup.plist */; };
 		A3BE86201CE418BE003C90E9 /* reactionTag.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3BE861D1CE418BE003C90E9 /* reactionTag.plist */; };
@@ -51,12 +48,9 @@
 /* Begin PBXFileReference section */
 		6E09442348E8323BB53870FA /* Pods-ReactionMechanism2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactionMechanism2UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactionMechanism2UITests/Pods-ReactionMechanism2UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		796F1B5983EA9A3FC9B7557A /* Pods-ReactionMechanism2UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactionMechanism2UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReactionMechanism2UITests/Pods-ReactionMechanism2UITests.release.xcconfig"; sourceTree = "<group>"; };
-		A33242921CB55FF700400305 /* TagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagView.h; sourceTree = "<group>"; };
-		A33242931CB55FF700400305 /* TagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagView.m; sourceTree = "<group>"; };
-		A35775AC1CBE0A5200BD2E5A /* TagResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagResultView.h; sourceTree = "<group>"; };
-		A35775AD1CBE0A5200BD2E5A /* TagResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagResultView.m; sourceTree = "<group>"; };
 		A36473E11CDF037700BA7AD6 /* ReactionLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactionLibrary.h; sourceTree = "<group>"; };
 		A36473E21CDF037700BA7AD6 /* ReactionLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactionLibrary.m; sourceTree = "<group>"; };
+		A36D39801DB6561900DCCCC9 /* ReactionSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactionSettings.h; sourceTree = "<group>"; };
 		A383A6591C3BB1840011563A /* ReactionMechanism2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactionMechanism2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A383A65D1C3BB1850011563A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A383A65F1C3BB1850011563A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -75,8 +69,6 @@
 		A383A6901C3BB7060011563A /* ConfigView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigView.m; sourceTree = "<group>"; };
 		A383A6981C3BBE250011563A /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListView.h; sourceTree = "<group>"; };
 		A383A6991C3BBE250011563A /* ListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListView.m; sourceTree = "<group>"; };
-		A383A69B1C3BBEC30011563A /* TagListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagListView.h; sourceTree = "<group>"; };
-		A383A69C1C3BBEC30011563A /* TagListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagListView.m; sourceTree = "<group>"; };
 		A3A4B55D1CA67A6B001C0E2C /* DetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailView.h; sourceTree = "<group>"; };
 		A3A4B55E1CA67A7A001C0E2C /* DetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailView.m; sourceTree = "<group>"; };
 		A3BE861C1CE418BE003C90E9 /* functionalGroup.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = functionalGroup.plist; sourceTree = "<group>"; };
@@ -160,8 +152,10 @@
 		A383A65B1C3BB1850011563A /* ReactionMechanism2 */ = {
 			isa = PBXGroup;
 			children = (
+				A383A65C1C3BB1850011563A /* Supporting Files */,
 				A383A65F1C3BB1850011563A /* AppDelegate.h */,
 				A383A6601C3BB1850011563A /* AppDelegate.m */,
+				A36D39801DB6561900DCCCC9 /* ReactionSettings.h */,
 				A36473E11CDF037700BA7AD6 /* ReactionLibrary.h */,
 				A36473E21CDF037700BA7AD6 /* ReactionLibrary.m */,
 				A383A6651C3BB1850011563A /* Main.storyboard */,
@@ -169,12 +163,6 @@
 				A383A6991C3BBE250011563A /* ListView.m */,
 				A3A4B55D1CA67A6B001C0E2C /* DetailView.h */,
 				A3A4B55E1CA67A7A001C0E2C /* DetailView.m */,
-				A383A69B1C3BBEC30011563A /* TagListView.h */,
-				A383A69C1C3BBEC30011563A /* TagListView.m */,
-				A33242921CB55FF700400305 /* TagView.h */,
-				A33242931CB55FF700400305 /* TagView.m */,
-				A35775AC1CBE0A5200BD2E5A /* TagResultView.h */,
-				A35775AD1CBE0A5200BD2E5A /* TagResultView.m */,
 				A383A68F1C3BB7060011563A /* ConfigView.h */,
 				A383A6901C3BB7060011563A /* ConfigView.m */,
 				A3BE861C1CE418BE003C90E9 /* functionalGroup.plist */,
@@ -183,7 +171,6 @@
 				A383A6681C3BB1850011563A /* Assets.xcassets */,
 				A383A66A1C3BB1850011563A /* LaunchScreen.storyboard */,
 				A383A66D1C3BB1850011563A /* Info.plist */,
-				A383A65C1C3BB1850011563A /* Supporting Files */,
 			);
 			path = ReactionMechanism2;
 			sourceTree = "<group>";
@@ -492,14 +479,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A35775AE1CBE0A5200BD2E5A /* TagResultView.m in Sources */,
 				A383A69A1C3BBE250011563A /* ListView.m in Sources */,
 				A383A6611C3BB1850011563A /* AppDelegate.m in Sources */,
 				A383A65E1C3BB1850011563A /* main.m in Sources */,
 				A36473E31CDF037700BA7AD6 /* ReactionLibrary.m in Sources */,
 				A383A6911C3BB7060011563A /* ConfigView.m in Sources */,
-				A33242941CB55FF700400305 /* TagView.m in Sources */,
-				A383A69D1C3BBEC30011563A /* TagListView.m in Sources */,
 				A3A4B55F1CA67A7A001C0E2C /* DetailView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -647,6 +631,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = onojun.ReactionMechanism2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -662,6 +647,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = onojun.ReactionMechanism2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

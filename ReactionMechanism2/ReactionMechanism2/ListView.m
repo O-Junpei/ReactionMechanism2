@@ -8,6 +8,7 @@
 
 #import "ListView.h"
 
+
 @interface ListView ()
 
 @end
@@ -39,6 +40,10 @@
 //様々な初期設定など
 -(void)setInitialView{
 #pragma mark --ナビゲーションバーの設定
+    
+    //Admob
+    NSLog(@"Google Mobile Ads SDK version: %@", [GADRequest sdkVersion]);
+
     
     //背景色の設定
     self.view.backgroundColor = [UIColor colorWithRed:(34.0/255.0) green:(138.0/255.0) blue:(251.0/255.0) alpha:1.0];
@@ -75,13 +80,16 @@
     _navLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_navLabel];
     
+#pragma mark --TableViewControllerの初期設定
+
+    
     //UITableViewの下のアレを消す
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 750)];
     whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView];
     
     // テーブルビュー例文
-    _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64-50)];
+    _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64-100)];
     _listTableView.delegate = self;
     _listTableView.dataSource = self;
     [self.view addSubview:_listTableView];
@@ -111,6 +119,13 @@
     
     //NSLog(@"%@ry",_sciencePlist);
     _searchedResult = [_sciencePlist mutableCopy];
+    
+    
+#pragma mark --広告画面が出るビュー
+    
+    [self setAdmob];
+    
+
 }
 
 
@@ -286,7 +301,6 @@
 
 
 
-
 #pragma mark --ナビゲーションボタン右上の虫眼鏡が押されたら動く
 - (void)showSearchBar:(UIButton *)btn
 {
@@ -294,5 +308,29 @@
     [_listTableView setContentOffset:CGPointZero animated:YES];
 }
 
+
+#pragma mart - 広告を設定する
+- (void)setAdmob{
+    
+    //広告
+    GADRequest *request = [GADRequest request];
+    request.testDevices = [NSArray arrayWithObjects:@"GAD_SIMULATOR_ID",nil];
+    
+    // 利用可能な広告サイズの定数値は GADAdSize.h で説明されている
+    bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    
+    [bannerView_ setCenter:CGPointMake(kGADAdSizeBanner.size.width/2, (self.view.frame.size.height-GAD_SIZE_320x50.height/2)-50)];
+    
+    // 広告ユニット ID を指定する
+    bannerView_.adUnitID = MY_BANNER_UNIT_ID;
+    
+    // ユーザーに広告を表示した場所に後で復元する UIViewController をランタイムに知らせて
+    // ビュー階層に追加する
+    bannerView_.rootViewController = self;
+    [self.view addSubview:bannerView_];
+    
+    // 一般的なリクエストを行って広告を読み込む
+    [bannerView_ loadRequest:[GADRequest request]];
+}
 
 @end

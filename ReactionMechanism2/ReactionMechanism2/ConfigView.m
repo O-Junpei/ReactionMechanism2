@@ -52,6 +52,10 @@
     _configTableView.delegate = self;
     _configTableView.dataSource = self;
     [self.view addSubview:_configTableView];
+    
+    
+    //広告を表示
+    [self setAdmob];
 }
 
 
@@ -297,7 +301,7 @@
         case AAShareBubbleTypeReddit:
             NSLog(@"Reddit");
             break;
-        case CUSTOM_BUTTON_ID_LINE:
+        case (int)CUSTOM_BUTTON_ID_LINE:
             //NSLog(@"LINE With Type %d ", bubbleType);
             [self spreadOnLINE];
             break;
@@ -468,5 +472,29 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+
+#pragma mart - 広告を設定する
+- (void)setAdmob{
+    
+    //広告
+    GADRequest *request = [GADRequest request];
+    request.testDevices = [NSArray arrayWithObjects:@"GAD_SIMULATOR_ID",nil];
+    
+    // 利用可能な広告サイズの定数値は GADAdSize.h で説明されている
+    bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    
+    [bannerView_ setCenter:CGPointMake(kGADAdSizeBanner.size.width/2, (self.view.frame.size.height-GAD_SIZE_320x50.height/2)-50)];
+    
+    // 広告ユニット ID を指定する
+    bannerView_.adUnitID = MY_BANNER_UNIT_ID;
+    
+    // ユーザーに広告を表示した場所に後で復元する UIViewController をランタイムに知らせて
+    // ビュー階層に追加する
+    bannerView_.rootViewController = self;
+    [self.view addSubview:bannerView_];
+    
+    // 一般的なリクエストを行って広告を読み込む
+    [bannerView_ loadRequest:[GADRequest request]];
+}
 
 @end
