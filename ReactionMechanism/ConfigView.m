@@ -54,6 +54,17 @@
     [self.view addSubview:_configTableView];
     
     
+    // 画像を指定したボタン例文
+    UIImage *bannerImg = [UIImage imageNamed:@"reactumBanner"];  // ボタンにする画像を生成する
+    float bannerHeight = 50;
+    UIButton *bunnerBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-bannerHeight*3, self.view.frame.size.width, bannerHeight)];  // ボタンのサイズを指定する
+    [bunnerBtn setBackgroundImage:bannerImg forState:UIControlStateNormal];  // 画像をセットする
+    // ボタンが押された時にhogeメソッドを呼び出す
+    [bunnerBtn addTarget:self action:@selector(openReactumPage:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:bunnerBtn];
+
+    
+    
     //広告を表示
     [self setAdmob];
 }
@@ -472,6 +483,12 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+
+#pragma mark -ReactumPageを開く
+-(void)openReactumPage:(UIButton*)button{
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/jp/app/reactum/id1078022623?mt=8"]];
+}
 
 #pragma mart - 広告を設定する
 - (void)setAdmob{

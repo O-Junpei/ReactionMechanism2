@@ -36,7 +36,7 @@
     [self setInitialView];
     
     //広告の表示
-    [self setAdmob];
+    //[self setAdmob];
 }
 
 
@@ -132,7 +132,7 @@
     UIButton *bunnerBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-50-bannerHeight, self.view.frame.size.width, bannerHeight)];  // ボタンのサイズを指定する
     [bunnerBtn setBackgroundImage:bannerImg forState:UIControlStateNormal];  // 画像をセットする
     // ボタンが押された時にhogeメソッドを呼び出す
-    [bunnerBtn addTarget:self action:@selector(hoge:) forControlEvents:UIControlEventTouchUpInside];
+    [bunnerBtn addTarget:self action:@selector(openReactumPage:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bunnerBtn];
 }
 
@@ -317,10 +317,11 @@
 }
 
 
-// 呼ばれるhogeメソッド
--(void)hoge:(UIButton*)button{
-    // ここに何かの処理を記述する
-    // （引数の button には呼び出し元のUIButtonオブジェクトが引き渡されてきます）
+#pragma mark -ReactumPageを開く
+-(void)openReactumPage:(UIButton*)button{
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/jp/app/reactum/"]];
+    
 }
 
 #pragma mart - 広告を設定する
