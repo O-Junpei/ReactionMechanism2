@@ -36,7 +36,7 @@
     [self setInitialView];
     
     //広告の表示
-    //[self setAdmob];
+   // [self setAdmob];
 }
 
 
@@ -320,7 +320,7 @@
 #pragma mark -ReactumPageを開く
 -(void)openReactumPage:(UIButton*)button{
     
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/jp/app/reactum/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/jp/app/reactum/id1078022623?mt=8"]];
     
 }
 

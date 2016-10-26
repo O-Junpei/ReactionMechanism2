@@ -57,7 +57,7 @@
     // 画像を指定したボタン例文
     UIImage *bannerImg = [UIImage imageNamed:@"reactumBanner"];  // ボタンにする画像を生成する
     float bannerHeight = 50;
-    UIButton *bunnerBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-bannerHeight*3, self.view.frame.size.width, bannerHeight)];  // ボタンのサイズを指定する
+    UIButton *bunnerBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-bannerHeight*2, self.view.frame.size.width, bannerHeight)];  // ボタンのサイズを指定する
     [bunnerBtn setBackgroundImage:bannerImg forState:UIControlStateNormal];  // 画像をセットする
     // ボタンが押された時にhogeメソッドを呼び出す
     [bunnerBtn addTarget:self action:@selector(openReactumPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -500,7 +500,7 @@
     // 利用可能な広告サイズの定数値は GADAdSize.h で説明されている
     bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
     
-    [bannerView_ setCenter:CGPointMake(self.view.frame.size.width/2, (self.view.frame.size.height-bannerView_.frame.size.height/2)-50)];
+    [bannerView_ setCenter:CGPointMake(self.view.frame.size.width/2, (self.view.frame.size.height-bannerView_.frame.size.height/2)-100)];
     
     // 広告ユニット ID を指定する
     bannerView_.adUnitID = MY_BANNER_UNIT_ID;
